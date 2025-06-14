@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.kotlin.qrcode)
     implementation(libs.kotlin.datetime)
     implementation(libs.ktor.koin)
+    implementation(libs.ktor.koin.logger)
     implementation(libs.ktor.bcrypt)
     implementation(libs.kotlin.mongodb.courotine)
     testImplementation(libs.ktor.turbine)
