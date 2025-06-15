@@ -1,6 +1,6 @@
 package com.br.util
 
-enum class SuccessCode(val message: String) {
+enum class SuccessCodes(val message: String) {
 
     //User
     LOGIN_SUCCESS("Login realizado com sucesso!"),

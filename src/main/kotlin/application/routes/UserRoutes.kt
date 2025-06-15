@@ -31,10 +31,10 @@ fun Route.createUser(
             val request = call.receiveNullable<AddUserRequest>()
             if (request != null) {
                 val simpleResponse = addUserService.addUser(request)
-                if (simpleResponse.successful) {
+                if (simpleResponse.isSuccessful) {
                     call.respond(HttpStatusCode.Created, simpleResponse)
                 } else {
-                    call.respond(HttpStatusCode.Conflict, simpleResponse)
+                    call.respond(HttpStatusCode.BadRequest, simpleResponse)
                 }
             } else {
                 call.respond(HttpStatusCode.BadRequest, ErrorCodes.UNKNOWN_ERROR)
