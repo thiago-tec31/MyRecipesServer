@@ -3,6 +3,8 @@ package com.br.di
 import com.br.domain.services.password.BCryptPasswordService
 import com.br.domain.services.token.TokenService
 import com.br.domain.services.user.AddUserService
+import com.br.domain.services.user.GetProfileUserService
+import com.br.domain.services.user.GetUserByIdService
 import com.br.domain.services.user.LoginUserService
 import org.koin.dsl.module
 
@@ -24,6 +26,8 @@ object ServiceModule {
                 userReadOnlyRepository = get()
             )
         }
+        single<GetProfileUserService> { GetProfileUserService(get()) }
+        single<GetUserByIdService> { GetUserByIdService(get()) }
         single<TokenService> { TokenService() }
         single<BCryptPasswordService> { BCryptPasswordService() }
     }

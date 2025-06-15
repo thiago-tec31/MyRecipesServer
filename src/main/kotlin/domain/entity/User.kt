@@ -1,6 +1,7 @@
 package com.br.domain.entity
 
 import com.br.domain.extensions.formatInstantForBrazilian
+import io.ktor.server.auth.Principal
 import kotlinx.datetime.Clock
 import org.bson.BsonType
 import org.bson.codecs.pojo.annotations.BsonId
@@ -16,4 +17,4 @@ data class User(
     @BsonRepresentation(BsonType.OBJECT_ID)
     override val id: String = ObjectId().toHexString(),
     override val createdAt: String = Clock.System.now().formatInstantForBrazilian()
-) : Basic()
+) : Basic(), Principal

@@ -35,17 +35,4 @@ class TokenService {
             throw IllegalArgumentException(ErrorCodes.TOKEN_GENERATION_ERROR.message)
         }
     }
-
-    fun retrieveIdByToken(token: String) : String {
-        return try {
-            val decodedJwt = JWT.require(algorithm)
-                .withAudience(audience)
-                .withIssuer(issuer)
-                .build()
-                .verify(token)
-            decodedJwt.subject
-        } catch (ex: JWTVerificationException) {
-            throw IllegalArgumentException(ErrorCodes.INVALID_TOKEN.message)
-        }
-    }
 }
