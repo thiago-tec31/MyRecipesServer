@@ -1,6 +1,6 @@
 package com.br.domain.validations
 
-import com.br.application.payloads.request.AuthUserRequest
+import com.br.application.payloads.requests.AuthUserRequest
 import com.br.application.payloads.responses.TokenResponse
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes

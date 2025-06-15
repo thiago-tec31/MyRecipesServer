@@ -1,4 +1,4 @@
-package application.payloads.request
+package application.payloads.requests
 
 import com.google.gson.annotations.SerializedName
 

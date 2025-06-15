@@ -1,6 +1,6 @@
 package com.br.domain.services.user
 
-import com.br.application.payloads.request.AuthUserRequest
+import com.br.application.payloads.requests.AuthUserRequest
 import com.br.application.payloads.responses.TokenResponse
 import com.br.domain.services.password.BCryptPasswordService
 import com.br.domain.services.token.TokenService

@@ -1,8 +1,7 @@
 package com.br.application.routes
 
-import application.payloads.request.AddUserRequest
-import com.br.application.payloads.request.AuthUserRequest
-import com.br.domain.entity.User
+import application.payloads.requests.AddUserRequest
+import com.br.application.payloads.requests.AuthUserRequest
 import com.br.domain.extensions.getUserAuthentication
 import com.br.domain.services.user.AddUserService
 import com.br.domain.services.user.GetProfileUserService
@@ -15,7 +14,6 @@ import io.ktor.server.application.application
 import io.ktor.server.application.call
 import io.ktor.server.application.log
 import io.ktor.server.auth.authenticate
-import io.ktor.server.auth.authentication
 import io.ktor.server.request.receiveNullable
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route

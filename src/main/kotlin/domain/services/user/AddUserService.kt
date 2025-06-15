@@ -1,6 +1,6 @@
 package com.br.domain.services.user
 
-import application.payloads.request.AddUserRequest
+import application.payloads.requests.AddUserRequest
 import com.br.application.payloads.responses.SimpleResponse
 import com.br.domain.entity.User
 import com.br.domain.services.password.BCryptPasswordService
