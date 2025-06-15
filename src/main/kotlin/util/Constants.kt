@@ -5,6 +5,7 @@ object Constants {
     const val DATABASE_NAME = "DATABASE_NAME"
     const val MONGODB_URI_LOCAL = "MONGODB_URI_LOCAL"
     const val MONGODB_URI_REMOTE = "MONGODB_URI_REMOTE"
+    const val SECRET = "SECRET"
 
     const val COST_FACTOR = 16
     const val DURATION_IN_SECONDS_QRCODE = 40

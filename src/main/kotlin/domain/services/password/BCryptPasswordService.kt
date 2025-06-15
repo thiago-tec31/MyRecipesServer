@@ -9,6 +9,6 @@ class BCryptPasswordService {
     }
 
     fun hashedPassword(const: Int, password: String): String {
-        return BCrypt.withDefaults().hash(const, password.toCharArray()).toString()
+        return BCrypt.withDefaults().hashToString(const, password.toCharArray()).toString()
     }
 }
