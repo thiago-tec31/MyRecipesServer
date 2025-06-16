@@ -1,6 +1,6 @@
 package com.br.domain.services.user
 
-import com.br.application.payloads.requests.AuthUserRequestFake
+import com.br.application.payloads.requests.AuthUserRequestFactory
 import com.br.application.payloads.response.TokenResponseFactory
 import com.br.domain.model.UserFactory
 import com.br.domain.services.password.BCryptPasswordService
@@ -32,7 +32,7 @@ class LoginUserServiceTest {
 
     private val userAnna = UserFactory().create(UserFactory.UserFake.Anna)
 
-    private val authUserRequestFactory = AuthUserRequestFake().create(
+    private val authUserRequestFactory = AuthUserRequestFactory().create(
         userAnna.email,
         userAnna.password
     )

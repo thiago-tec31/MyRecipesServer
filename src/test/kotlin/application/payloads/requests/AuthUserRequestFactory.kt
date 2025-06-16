@@ -1,6 +1,6 @@
 package com.br.application.payloads.requests
 
-class AuthUserRequestFake {
+class AuthUserRequestFactory {
     fun create(email: String, password: String) =
         AuthUserRequest(email, password)
 }
