@@ -40,7 +40,11 @@ fun Route.getUserProfile(getProfileUserService: GetProfileUserService) {
         try {
             val userId = call.getUserAuthentication()
             val userResponse = getProfileUserService.getProfileUserById(userId)
-            call.respond(userResponse)
+            if (userResponse != null) {
+                call.respond(HttpStatusCode.OK, userResponse)
+            } else {
+                call.respond(HttpStatusCode.BadRequest, ErrorCodes.UNKNOWN_ERROR.message)
+            }
         } catch (e: ServerResponseException) {
             application.log.error(e.message)
             call.respond(HttpStatusCode.BadRequest)

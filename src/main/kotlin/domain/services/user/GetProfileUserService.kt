@@ -7,8 +7,8 @@ import com.br.infra.repository.user.UserReadOnlyRepository
 class GetProfileUserService(
     private val userReadOnlyRepository: UserReadOnlyRepository
 ) {
-    suspend fun getProfileUserById(userId: String): UserResponse {
+    suspend fun getProfileUserById(userId: String): UserResponse? {
         val userModel = userReadOnlyRepository.findUserById(userId)
-        return userModel.toUserResponse()
+        return userModel?.toUserResponse()
     }
 }

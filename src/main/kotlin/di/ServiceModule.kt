@@ -28,7 +28,7 @@ object ServiceModule {
         }
         single<GetProfileUserService> { GetProfileUserService(get()) }
         single<GetUserByIdService> { GetUserByIdService(get()) }
-        single<TokenService> { TokenService() }
+        single<TokenService> { TokenService(get()) }
         single<BCryptPasswordService> { BCryptPasswordService() }
     }
 }

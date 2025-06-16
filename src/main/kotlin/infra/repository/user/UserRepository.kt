@@ -1,5 +1,6 @@
 package com.br.infra.repository.user
 
+import com.br.domain.database.DatabaseService
 import com.br.domain.entity.User
 import com.br.util.Constants
 import com.br.util.ErrorCodes
@@ -12,11 +13,11 @@ import org.bson.types.ObjectId
 import org.slf4j.LoggerFactory
 
 class UserRepository(
-    mongoDatabase: MongoDatabase
+    databaseService: DatabaseService
 ): UserWriteOnlyRepository, UserReadOnlyRepository {
 
     private val logger = LoggerFactory.getLogger(UserRepository::class.java)
-    private val usersCollection = mongoDatabase.getCollection<User>(Constants.COLLECTION_NAME_USERS)
+    private val usersCollection = databaseService.database.getCollection<User>(Constants.COLLECTION_NAME_USERS)
 
     override suspend fun insertUser(user: User): Boolean {
         try {
