@@ -6,7 +6,7 @@ logback-version = "1.4.14"
 kotlin-qrcode-version = "4.1.0"
 kotlin-datetime-version = "0.5.0"
 ktor-koin-version = "3.5.1"
-kotlin-mongodb-courotine-version = "4.11.1"
+kotlin-mongodb-courotine-version = "5.1.0"
 ktor-bcrypt-version = "0.10.2"
 ktor-turbine-version = "1.1.0"
 ktor-mockk-version = "1.13.10"
@@ -35,11 +35,14 @@ kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version
 kotlin-qrcode = { module = "io.github.g0dkar:qrcode-kotlin",  version.ref = "kotlin-qrcode-version" }
 kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin-datetime-version" }
 ktor-koin = { module = "io.insert-koin:koin-ktor", version.ref = "ktor-koin-version" }
+ktor-koin-logger = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "ktor-koin-version" }
 kotlin-mongodb-courotine = { module = "org.mongodb:mongodb-driver-kotlin-coroutine", version.ref = "kotlin-mongodb-courotine-version" }
 ktor-bcrypt = { module = "at.favre.lib:bcrypt", version.ref = "ktor-bcrypt-version" }
 ktor-turbine = { module = "app.cash.turbine:turbine", version.ref = "ktor-turbine-version" }
 ktor-mockk = { module = "io.mockk:mockk", version.ref = "ktor-mockk-version" }
 ktor-truth = { module = "com.google.truth:truth", version.ref = "ktor-truth-version" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth-jvm" }
+ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation-jvm" }
 
 
 [plugins]
