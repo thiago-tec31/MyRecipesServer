@@ -1,0 +1,61 @@
+package com.br.domain.services.user
+
+import com.br.application.mappers.toUserResponse
+import com.br.domain.model.UserFactory
+import com.br.infra.repository.user.UserReadOnlyRepository
+import com.google.common.truth.Truth.assertThat
+import io.mockk.clearAllMocks
+import io.mockk.coEvery
+import io.mockk.mockk
+import kotlinx.coroutines.runBlocking
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+
+class GetProfileUserServiceTest {
+
+    private lateinit var userReadOnlyRepository: UserReadOnlyRepository
+
+    private lateinit var getProfileUserService: GetProfileUserService
+
+    private val userAnna = UserFactory().create(UserFactory.UserFake.Anna)
+
+    @BeforeTest
+    fun setUp() {
+        userReadOnlyRepository = mockk()
+        getProfileUserService = GetProfileUserService(userReadOnlyRepository)
+    }
+
+    @AfterTest
+    fun tearDown() {
+        clearAllMocks()
+    }
+
+    @Test
+    fun `should return user profile when valid ID is provided`() = runBlocking {
+        // GIVEN
+        val userId = userAnna.id
+        coEvery { userReadOnlyRepository.findUserById(eq(userId)) } returns userAnna
+
+        // WHEN
+        val result = getProfileUserService.getProfileUserById(userId)
+        val expectedResponse = userAnna.toUserResponse()
+
+        // THEN
+        assertThat(result).isNotNull()
+        assertThat(result).isEqualTo(expectedResponse)
+    }
+
+    @Test
+    fun `should return null when user ID is not found`() = runBlocking {
+        // GIVEN
+        val userId = "1234"
+        coEvery { userReadOnlyRepository.findUserById(eq(userId)) } returns null
+
+        // WHEN
+        val result = getProfileUserService.getProfileUserById(userId)
+
+        // THEN
+        assertThat(result).isNull()
+    }
+}
