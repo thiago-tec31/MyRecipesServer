@@ -1,12 +1,12 @@
 package com.br.domain.validations
 
-import application.payloads.requests.AddUserRequest
+import application.payloads.requests.RegisterUserRequest
 import com.br.application.payloads.responses.SimpleResponse
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
 
 interface AddValidationUserRequest {
-    suspend fun validator(request: AddUserRequest) : SimpleResponse
+    suspend fun validator(request: RegisterUserRequest) : SimpleResponse
 }
 
 class AddValidationUserRequestImpl : AddValidationUserRequest  {
@@ -15,7 +15,7 @@ class AddValidationUserRequestImpl : AddValidationUserRequest  {
     private val phoneRegex = "[0-9]{2} [1-9]{1} [0-9]{4}-[0-9]{4}".toRegex()
 
 
-    override suspend fun validator(request: AddUserRequest): SimpleResponse {
+    override suspend fun validator(request: RegisterUserRequest): SimpleResponse {
         return when {
             request.name.isEmpty() -> SimpleResponse(
                 isSuccessful = false,

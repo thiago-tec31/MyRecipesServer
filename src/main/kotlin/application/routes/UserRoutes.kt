@@ -1,9 +1,9 @@
 package com.br.application.routes
 
-import application.payloads.requests.AddUserRequest
+import application.payloads.requests.RegisterUserRequest
 import com.br.application.payloads.requests.AuthUserRequest
 import com.br.domain.extensions.getUserAuthentication
-import com.br.domain.services.user.AddUserService
+import com.br.domain.services.user.RegisterUserService
 import com.br.domain.services.user.GetProfileUserService
 import com.br.domain.services.user.LoginUserService
 import com.br.util.Constants
@@ -22,20 +22,20 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 
 fun Route.usersRoute(
-    addUserService: AddUserService,
+    addUserService: RegisterUserService,
     loginUserService: LoginUserService,
     getProfileUserService: GetProfileUserService
 ) {
     route(Constants.USER_ROUTE) {
         authenticate {
-            getUserProfile(getProfileUserService)
+            getProfile(getProfileUserService)
         }
-        createUser(addUserService)
-        loginUser(loginUserService)
+        register(addUserService)
+        login(loginUserService)
     }
 }
 
-fun Route.getUserProfile(getProfileUserService: GetProfileUserService) {
+fun Route.getProfile(getProfileUserService: GetProfileUserService) {
     get("/profile") {
         try {
             val userId = call.getUserAuthentication()
@@ -52,14 +52,14 @@ fun Route.getUserProfile(getProfileUserService: GetProfileUserService) {
     }
 }
 
-fun Route.createUser(
-    addUserService: AddUserService
+fun Route.register(
+    addUserService: RegisterUserService
 ) {
     post("/register") {
         try {
-            val request = call.receiveNullable<AddUserRequest>()
+            val request = call.receiveNullable<RegisterUserRequest>()
             if (request != null) {
-                val simpleResponse = addUserService.addUser(request)
+                val simpleResponse = addUserService.register(request)
                 if (simpleResponse.isSuccessful) {
                     call.respond(HttpStatusCode.Created, simpleResponse)
                 } else {
@@ -75,18 +75,18 @@ fun Route.createUser(
     }
 }
 
-fun Route.loginUser(
+fun Route.login(
     loginUserService: LoginUserService
 ) {
     post("/login") {
         try {
             val request = call.receiveNullable<AuthUserRequest>()
             if (request != null) {
-                val simpleResponse = loginUserService.loginUser(request)
-                if (simpleResponse.isSuccessful) {
-                    call.respond(HttpStatusCode.OK, simpleResponse)
+                val tokenResponse = loginUserService.loginUser(request)
+                if (tokenResponse.isSuccessful) {
+                    call.respond(HttpStatusCode.OK, tokenResponse)
                 } else {
-                    call.respond(HttpStatusCode.BadRequest, simpleResponse)
+                    call.respond(HttpStatusCode.BadRequest, tokenResponse)
                 }
             } else {
                 call.respond(HttpStatusCode.BadRequest, ErrorCodes.UNKNOWN_ERROR)

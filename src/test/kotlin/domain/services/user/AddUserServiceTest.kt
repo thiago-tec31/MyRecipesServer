@@ -1,6 +1,6 @@
 package com.br.domain.services.user
 
-import com.br.application.payloads.requests.AddUserRequestFactory
+import com.br.application.payloads.requests.RegisterUserRequestFactory
 import com.br.application.payloads.response.SimpleResponseFactory
 import com.br.domain.services.password.BCryptPasswordService
 import com.br.domain.validations.AddValidationUserRequest
@@ -25,9 +25,9 @@ class AddUserServiceTest {
     private lateinit var userReadOnlyRepository: UserReadOnlyRepository
     private lateinit var userWriteOnlyRepository: UserWriteOnlyRepository
 
-    private lateinit var addUserService: AddUserService
+    private lateinit var registerUserService: RegisterUserService
 
-    private val addUserRequest = AddUserRequestFactory().create()
+    private val registerUserRequest = RegisterUserRequestFactory().create()
 
     private val simpleResponse = SimpleResponseFactory().create(
         isSuccessfully = true,
@@ -41,7 +41,7 @@ class AddUserServiceTest {
         userReadOnlyRepository = mockk()
         userWriteOnlyRepository = mockk()
 
-        addUserService = AddUserService(
+        registerUserService = RegisterUserService(
             addValidationUserRequest, bCryptPasswordService, userWriteOnlyRepository, userReadOnlyRepository
         )
     }
@@ -63,7 +63,7 @@ class AddUserServiceTest {
         coEvery { userWriteOnlyRepository.insertUser(any()) } returns true
 
         // WHEN
-        val result = addUserService.addUser(addUserRequest)
+        val result = registerUserService.register(registerUserRequest)
 
         // THEN
         assertThat(result.isSuccessful).isTrue()
@@ -77,7 +77,7 @@ class AddUserServiceTest {
         coEvery { userReadOnlyRepository.checkIfUserExists(any()) } returns true
 
         // WHEN
-        val result = addUserService.addUser(addUserRequest)
+        val result = registerUserService.register(registerUserRequest)
 
         // THEN
         assertThat(result.isSuccessful).isFalse()
@@ -96,7 +96,7 @@ class AddUserServiceTest {
         coEvery { userWriteOnlyRepository.insertUser(any()) } returns false
 
         // WHEN
-        val result = addUserService.addUser(addUserRequest)
+        val result = registerUserService.register(registerUserRequest)
 
         // THEN
         assertThat(result.isSuccessful).isFalse()

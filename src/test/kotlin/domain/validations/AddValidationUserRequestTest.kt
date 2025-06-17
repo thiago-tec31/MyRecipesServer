@@ -1,6 +1,6 @@
 package com.br.domain.validations
 
-import com.br.application.payloads.requests.AddUserRequestFactory
+import com.br.application.payloads.requests.RegisterUserRequestFactory
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
 import com.google.common.truth.Truth.assertThat
@@ -12,7 +12,7 @@ class AddValidationUserRequestTest {
 
     private lateinit var validator: AddValidationUserRequest
 
-    private val addAUserRequest = AddUserRequestFactory().create()
+    private val registerUserRequest = RegisterUserRequestFactory().create()
 
     @BeforeTest
     fun setUp() {
@@ -21,7 +21,7 @@ class AddValidationUserRequestTest {
 
     @Test
     fun `validator should return NAME_REQUIRED when name is empty`() = runBlocking {
-        val request = addAUserRequest.copy(
+        val request = registerUserRequest.copy(
             name = "",
             email = "alex@gmail.com",
             password = "password123",
@@ -36,7 +36,7 @@ class AddValidationUserRequestTest {
     @Test
     fun `validator should return EMAIL_REQUIRED when email is empty`() = runBlocking {
         val request =
-            addAUserRequest.copy(name = "Alex", email = "", password = "password123", phone = "12 9 1234-5678")
+            registerUserRequest.copy(name = "Alex", email = "", password = "password123", phone = "12 9 1234-5678")
         val response = validator.validator(request)
 
         assertThat(response.isSuccessful).isFalse()
@@ -45,7 +45,7 @@ class AddValidationUserRequestTest {
 
     @Test
     fun `validator should return INVALID_EMAIL when email is invalid`() = runBlocking {
-        val request = addAUserRequest.copy(
+        val request = registerUserRequest.copy(
             name = "Alex",
             email = "invalid-email",
             password = "password123",
@@ -60,7 +60,7 @@ class AddValidationUserRequestTest {
     @Test
     fun `validator should return PASSWORD_REQUIRED when password is empty`() = runBlocking {
         val request =
-            addAUserRequest.copy(name = "Alex", email = "alex@gmail.com", password = "", phone = "12 9 1234-5678")
+            registerUserRequest.copy(name = "Alex", email = "alex@gmail.com", password = "", phone = "12 9 1234-5678")
         val response = validator.validator(request)
 
         assertThat(response.isSuccessful).isFalse()
@@ -69,7 +69,7 @@ class AddValidationUserRequestTest {
 
     @Test
     fun `validator should return PASSWORD_TOO_SHORT when password is less than 6 characters`() = runBlocking {
-        val request = addAUserRequest.copy(
+        val request = registerUserRequest.copy(
             name = "Alex",
             email = "alex@gmail.com",
             password = "123",
@@ -84,7 +84,7 @@ class AddValidationUserRequestTest {
     @Test
     fun `validator should return PHONE_REQUIRED when phone is empty`() = runBlocking {
         val request =
-            addAUserRequest.copy(name = "Alex", email = "alex@gmail.com", password = "password123", phone = "")
+            registerUserRequest.copy(name = "Alex", email = "alex@gmail.com", password = "password123", phone = "")
         val response = validator.validator(request)
 
         assertThat(response.isSuccessful).isFalse()
@@ -93,7 +93,7 @@ class AddValidationUserRequestTest {
 
     @Test
     fun `validator should return INVALID_PHONE_FORMAT when phone is invalid`() = runBlocking {
-        val request = addAUserRequest.copy(
+        val request = registerUserRequest.copy(
             name = "Alex",
             email = "alex@gmail.com",
             password = "password123",
@@ -107,7 +107,7 @@ class AddValidationUserRequestTest {
 
     @Test
     fun `validator should return VALID_REGISTRATION when all fields are valid`() = runBlocking {
-        val request = addAUserRequest.copy(
+        val request = registerUserRequest.copy(
             name = "Alex",
             email = "alex@gmail.com",
             password = "password123",

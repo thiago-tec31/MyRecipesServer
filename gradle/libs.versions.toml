@@ -41,6 +41,8 @@ ktor-bcrypt = { module = "at.favre.lib:bcrypt", version.ref = "ktor-bcrypt-versi
 ktor-turbine = { module = "app.cash.turbine:turbine", version.ref = "ktor-turbine-version" }
 ktor-mockk = { module = "io.mockk:mockk", version.ref = "ktor-mockk-version" }
 ktor-truth = { module = "com.google.truth:truth", version.ref = "ktor-truth-version" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth-jvm" }
+ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation-jvm" }
 
 
 [plugins]

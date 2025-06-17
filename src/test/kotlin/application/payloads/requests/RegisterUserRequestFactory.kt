@@ -1,9 +1,9 @@
 package com.br.application.payloads.requests
 
-import application.payloads.requests.AddUserRequest
+import application.payloads.requests.RegisterUserRequest
 
-class AddUserRequestFactory {
-    fun create(): AddUserRequest = AddUserRequest(
+class RegisterUserRequestFactory {
+    fun create(): RegisterUserRequest = RegisterUserRequest(
         name = "Alex",
         email = "alex@gmail.com",
         password = "alex123@",

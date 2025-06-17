@@ -2,7 +2,7 @@ package com.br.di
 
 import com.br.domain.services.password.BCryptPasswordService
 import com.br.domain.services.token.TokenService
-import com.br.domain.services.user.AddUserService
+import com.br.domain.services.user.RegisterUserService
 import com.br.domain.services.user.GetProfileUserService
 import com.br.domain.services.user.GetUserByIdService
 import com.br.domain.services.user.LoginUserService
@@ -10,8 +10,8 @@ import org.koin.dsl.module
 
 object ServiceModule {
     val module = module {
-        single<AddUserService> {
-            AddUserService(
+        single<RegisterUserService> {
+            RegisterUserService(
                 addValidationUserRequest = get(),
                 bCryptPasswordService = get(),
                 userWriteOnlyRepository = get(),
