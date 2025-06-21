@@ -1,6 +1,6 @@
-package com.br.application.routes
+package application.routes
 
-import application.payloads.requests.RegisterUserRequest
+import com.br.application.payloads.requests.RegisterUserRequest
 import com.br.application.payloads.requests.AuthUserRequest
 import com.br.application.payloads.responses.SimpleResponse
 import com.br.application.payloads.responses.TokenResponse
@@ -71,7 +71,7 @@ class UserRoutesTest {
 
         val response = client.post("/api/v1/users/login") {
             contentType(ContentType.Application.Json)
-            setBody(registerUserRequest)
+            setBody(authUserRequest)
         }
 
         val tokenResponse = response.body<TokenResponse>()
@@ -96,7 +96,7 @@ class UserRoutesTest {
 
         val responseLogin = client.post("/api/v1/users/login") {
             contentType(ContentType.Application.Json)
-            setBody(registerUserRequest)
+            setBody(authUserRequest)
         }
 
         val tokenResponse = responseLogin.body<TokenResponse>()

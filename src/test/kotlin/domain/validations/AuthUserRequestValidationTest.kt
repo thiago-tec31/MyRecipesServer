@@ -1,6 +1,8 @@
-package com.br.domain.validations
+package domain.validations
 
-import com.br.application.payloads.requests.AuthUserRequestFactory
+import application.payloads.requests.AuthUserRequestFactory
+import com.br.domain.validations.AuthValidationUserRequest
+import com.br.domain.validations.AuthValidationUserRequestImpl
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
 import com.google.common.truth.Truth.assertThat
@@ -10,7 +12,7 @@ import kotlin.test.Test
 
 class AuthUserRequestValidationTest {
 
-    private lateinit var validator: AuthUserRequestValidation
+    private lateinit var validator: AuthValidationUserRequest
 
     private val authUserRequest = AuthUserRequestFactory().create(
         email = "alex@gmail.com", password = "password123"
@@ -18,7 +20,7 @@ class AuthUserRequestValidationTest {
 
     @BeforeTest
     fun setUp() {
-        validator = AuthUserRequestValidationImpl()
+        validator = AuthValidationUserRequestImpl()
     }
 
     @Test

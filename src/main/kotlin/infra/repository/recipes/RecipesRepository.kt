@@ -1,11 +1,10 @@
-package com.br.infra.repository.recipe
+package com.br.infra.repository.recipes
 
-import com.br.application.payloads.requests.AddUpdateRecipeRequest
+import com.br.application.payloads.requests.AddUpdateRecipesRequest
 import com.br.domain.database.DatabaseService
 import com.br.domain.entity.CategoryEnum
 import com.br.domain.entity.Ingredients
 import com.br.domain.entity.Recipes
-import com.br.domain.entity.User
 import com.br.util.Constants
 import com.br.util.ErrorCodes
 import com.mongodb.MongoException
@@ -48,17 +47,17 @@ class RecipesRepository(
 
     override suspend fun update(
         recipeId: String,
-        addUpdateRecipeRequest: AddUpdateRecipeRequest
+        addUpdateRecipesRequest: AddUpdateRecipesRequest
     ): Boolean {
         try {
             val update = recipesCollection.updateOne(
                 filter = Filters.eq("_id", ObjectId(recipeId)),
                 update = Updates.combine(
-                    Updates.set(Recipes::name.name, addUpdateRecipeRequest.name),
-                    Updates.set(Recipes::category.name, CategoryEnum.fromInt(addUpdateRecipeRequest.category)),
-                    Updates.set(Recipes::preparationMode.name, addUpdateRecipeRequest.preparationMode),
-                    Updates.set(Recipes::preparationTime.name, addUpdateRecipeRequest.preparationTime),
-                    Updates.set(Recipes::ingredients.name, addUpdateRecipeRequest.ingredients.map { ingredientsRequest ->
+                    Updates.set(Recipes::name.name, addUpdateRecipesRequest.name),
+                    Updates.set(Recipes::category.name, CategoryEnum.fromInt(addUpdateRecipesRequest.category)),
+                    Updates.set(Recipes::preparationMode.name, addUpdateRecipesRequest.preparationMode),
+                    Updates.set(Recipes::preparationTime.name, addUpdateRecipesRequest.preparationTime),
+                    Updates.set(Recipes::ingredients.name, addUpdateRecipesRequest.ingredients.map { ingredientsRequest ->
                         Ingredients(
                             recipeId = recipeId,
                             name = ingredientsRequest.name,
@@ -114,7 +113,7 @@ class RecipesRepository(
     ): List<Recipes> {
         try {
             val recipesUser = getByUser(userId, null).takeIf { recipes ->
-                recipes.isEmpty()
+                recipes.isNotEmpty()
             } ?: return emptyList()
 
             return recipesUser.filter { recipes ->

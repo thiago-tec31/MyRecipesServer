@@ -1,4 +1,4 @@
-package com.br.application.payloads.response
+package application.payloads.response
 
 import com.br.application.payloads.responses.TokenResponse
 

@@ -1,4 +1,4 @@
-package com.br.infra.repository.recipe
+package com.br.infra.repository.recipes
 
 import com.br.domain.entity.CategoryEnum
 import com.br.domain.entity.Recipes

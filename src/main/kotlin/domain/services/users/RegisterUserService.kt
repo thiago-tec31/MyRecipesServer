@@ -1,8 +1,8 @@
-package com.br.domain.services.user
+package com.br.domain.services.users
 
-import application.payloads.requests.RegisterUserRequest
+import com.br.application.payloads.requests.RegisterUserRequest
 import com.br.application.payloads.responses.SimpleResponse
-import com.br.domain.entity.User
+import com.br.domain.entity.Users
 import com.br.domain.services.password.BCryptPasswordService
 import com.br.domain.validations.AddValidationUserRequest
 import com.br.infra.repository.user.UserReadOnlyRepository
@@ -34,14 +34,14 @@ class RegisterUserService(
             password = registerUserRequest.password
         )
 
-        val user = User(
+        val users = Users(
             name = registerUserRequest.name,
             email = registerUserRequest.email,
             phone = registerUserRequest.phone,
             password = hashedPassword
         )
 
-        val result = userWriteOnlyRepository.insertUser(user)
+        val result = userWriteOnlyRepository.insertUser(users)
         return if (result) {
             SimpleResponse(isSuccessful = true, message = SuccessCodes.REGISTRATION_COMPLETED.message)
         } else {

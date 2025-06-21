@@ -1,12 +1,12 @@
-package com.br.domain.model
+package domain.model
 
-import com.br.domain.entity.User
+import com.br.domain.entity.Users
 
 class UserFactory {
 
     fun create(user: UserFake) = when(user) {
         UserFake.Alex -> {
-            User(
+            Users(
                 name = "Anna",
                 email = "anna@gmail.com",
                 password = "123456A@",
@@ -14,7 +14,7 @@ class UserFactory {
             )
         }
         UserFake.Anna -> {
-            User(
+            Users(
                 name = "Alex",
                 email = "alex@gmail.com",
                 password = "123456A@",

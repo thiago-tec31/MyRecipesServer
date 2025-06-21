@@ -1,10 +1,11 @@
-package com.br.domain.services.user
+package domain.services.users
 
-import com.br.application.payloads.requests.RegisterUserRequestFactory
-import com.br.application.payloads.response.SimpleResponseFactory
+import application.payloads.requests.RegisterUserRequestFactory
+import application.payloads.response.SimpleResponseFactory
 import com.br.domain.services.password.BCryptPasswordService
+import com.br.domain.services.users.RegisterUserService
 import com.br.domain.validations.AddValidationUserRequest
-import com.br.fake_util.Constants
+import fake_util.Constants
 import com.br.infra.repository.user.UserReadOnlyRepository
 import com.br.infra.repository.user.UserWriteOnlyRepository
 import com.br.util.ErrorCodes

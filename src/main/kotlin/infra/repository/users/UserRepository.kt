@@ -1,12 +1,11 @@
 package com.br.infra.repository.user
 
 import com.br.domain.database.DatabaseService
-import com.br.domain.entity.User
+import com.br.domain.entity.Users
 import com.br.util.Constants
 import com.br.util.ErrorCodes
 import com.mongodb.MongoException
 import com.mongodb.client.model.Filters
-import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
 import org.bson.types.ObjectId
@@ -17,11 +16,11 @@ class UserRepository(
 ): UserWriteOnlyRepository, UserReadOnlyRepository {
 
     private val logger = LoggerFactory.getLogger(UserRepository::class.java)
-    private val usersCollection = databaseService.database.getCollection<User>(Constants.COLLECTION_NAME_USERS)
+    private val usersCollection = databaseService.database.getCollection<Users>(Constants.COLLECTION_NAME_USERS)
 
-    override suspend fun insertUser(user: User): Boolean {
+    override suspend fun insertUser(users: Users): Boolean {
         try {
-            return usersCollection.insertOne(user).wasAcknowledged()
+            return usersCollection.insertOne(users).wasAcknowledged()
         } catch (e: Exception) {
             when(e) {
                 is MongoException -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)
@@ -31,7 +30,7 @@ class UserRepository(
         return false
     }
 
-    override suspend fun findUserById(userId: String): User? {
+    override suspend fun findUserById(userId: String): Users? {
         try {
             val filter = Filters.eq("_id", ObjectId(userId))
             return usersCollection.find(filter).firstOrNull()
@@ -44,7 +43,7 @@ class UserRepository(
         return null
     }
 
-    override suspend fun findUsersByIds(usersIds: List<String>): List<User> {
+    override suspend fun findUsersByIds(usersIds: List<String>): List<Users> {
         try {
             val objectIds = usersIds.map { ObjectId(it) }
             return usersCollection.find(Filters.`in`("_id", objectIds)).toList()
@@ -59,7 +58,7 @@ class UserRepository(
 
     override suspend fun checkIfUserExists(email: String): Boolean {
         try {
-            val count = usersCollection.countDocuments(Filters.eq(User::email.name, email))
+            val count = usersCollection.countDocuments(Filters.eq(Users::email.name, email))
             return count > 0
         } catch (e: Exception) {
             when(e) {
@@ -70,9 +69,9 @@ class UserRepository(
         return false
     }
 
-    override suspend fun checkIfUserExistsReturn(email: String): User? {
+    override suspend fun checkIfUserExistsReturn(email: String): Users? {
         try {
-            return usersCollection.find(Filters.eq(User::email.name, email)).firstOrNull()
+            return usersCollection.find(Filters.eq(Users::email.name, email)).firstOrNull()
         } catch (e: Exception) {
             when(e) {
                 is MongoException -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)

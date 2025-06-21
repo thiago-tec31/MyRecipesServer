@@ -5,7 +5,6 @@ import kotlinx.datetime.Clock
 import org.bson.BsonType
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.codecs.pojo.annotations.BsonRepresentation
-import org.bson.types.ObjectId
 
 data class Recipes(
     val name: String,
@@ -16,6 +15,6 @@ data class Recipes(
     val ingredients: List<Ingredients> = listOf(),
     @BsonId
     @BsonRepresentation(BsonType.OBJECT_ID)
-    override val id: String = ObjectId().toHexString(),
+    override val id: String,
     override val createdAt: String = Clock.System.now().formatInstantForBrazilian()
 ) : Basic()

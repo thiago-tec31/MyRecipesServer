@@ -1,4 +1,6 @@
-package com.br.application.payloads.requests
+package application.payloads.requests
+
+import com.br.application.payloads.requests.AuthUserRequest
 
 class AuthUserRequestFactory {
     fun create(email: String, password: String) =

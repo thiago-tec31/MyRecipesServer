@@ -8,7 +8,7 @@ import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.codecs.pojo.annotations.BsonRepresentation
 import org.bson.types.ObjectId
 
-data class User(
+data class Users(
     val name: String,
     val email: String,
     val password: String,

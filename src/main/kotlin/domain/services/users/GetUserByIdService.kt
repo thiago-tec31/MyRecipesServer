@@ -1,12 +1,12 @@
-package com.br.domain.services.user
+package com.br.domain.services.users
 
-import com.br.domain.entity.User
+import com.br.domain.entity.Users
 import com.br.infra.repository.user.UserReadOnlyRepository
 
 class GetUserByIdService(
     private val userReadOnlyRepository: UserReadOnlyRepository
 ) {
-    suspend fun getUserById(userId: String): User? {
+    suspend fun getUserById(userId: String): Users? {
         return userReadOnlyRepository.findUserById(userId)
     }
 }

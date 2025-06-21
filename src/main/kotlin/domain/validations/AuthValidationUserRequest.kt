@@ -5,11 +5,11 @@ import com.br.application.payloads.responses.TokenResponse
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
 
-interface AuthUserRequestValidation {
+interface AuthValidationUserRequest {
     suspend fun validator(request: AuthUserRequest): TokenResponse
 }
 
-class AuthUserRequestValidationImpl : AuthUserRequestValidation {
+class AuthValidationUserRequestImpl : AuthValidationUserRequest {
 
     private val emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$".toRegex()
 

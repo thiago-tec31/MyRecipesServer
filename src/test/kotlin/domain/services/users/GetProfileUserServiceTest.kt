@@ -1,6 +1,8 @@
-package com.br.domain.services.user
+package domain.services.users
 
-import com.br.domain.model.UserFactory
+import com.br.application.mappers.toUserResponse
+import domain.model.UserFactory
+import com.br.domain.services.users.GetProfileUserService
 import com.br.infra.repository.user.UserReadOnlyRepository
 import com.google.common.truth.Truth.assertThat
 import io.mockk.clearAllMocks
@@ -11,18 +13,18 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-class GetUserByIdServiceTest {
+class GetProfileUserServiceTest {
 
     private lateinit var userReadOnlyRepository: UserReadOnlyRepository
 
-    private lateinit var getUserByIdService: GetUserByIdService
+    private lateinit var getProfileUserService: GetProfileUserService
 
     private val userAnna = UserFactory().create(UserFactory.UserFake.Anna)
 
     @BeforeTest
     fun setUp() {
         userReadOnlyRepository = mockk()
-        getUserByIdService = GetUserByIdService(userReadOnlyRepository)
+        getProfileUserService = GetProfileUserService(userReadOnlyRepository)
     }
 
     @AfterTest
@@ -31,26 +33,28 @@ class GetUserByIdServiceTest {
     }
 
     @Test
-    fun `should return user when valid ID is provide`() = runBlocking {
+    fun `should return user profile when valid ID is provided`() = runBlocking {
         // GIVEN
         val userId = userAnna.id
         coEvery { userReadOnlyRepository.findUserById(eq(userId)) } returns userAnna
 
         // WHEN
-        val result = getUserByIdService.getUserById(userId)
+        val result = getProfileUserService.getProfileUserById(userId)
+        val expectedResponse = userAnna.toUserResponse()
 
         // THEN
-        assertThat(result).isEqualTo(userAnna)
+        assertThat(result).isNotNull()
+        assertThat(result).isEqualTo(expectedResponse)
     }
 
     @Test
-    fun `should return null when no exist user ID is provide`() = runBlocking {
+    fun `should return null when user ID is not found`() = runBlocking {
         // GIVEN
-        val userId = userAnna.id
+        val userId = "1234"
         coEvery { userReadOnlyRepository.findUserById(eq(userId)) } returns null
 
         // WHEN
-        val result = getUserByIdService.getUserById(userId)
+        val result = getProfileUserService.getProfileUserById(userId)
 
         // THEN
         assertThat(result).isNull()

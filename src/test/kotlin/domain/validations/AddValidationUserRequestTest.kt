@@ -1,6 +1,8 @@
-package com.br.domain.validations
+package domain.validations
 
-import com.br.application.payloads.requests.RegisterUserRequestFactory
+import application.payloads.requests.RegisterUserRequestFactory
+import com.br.domain.validations.AddValidationUserRequest
+import com.br.domain.validations.AddValidationUserRequestImpl
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
 import com.google.common.truth.Truth.assertThat
