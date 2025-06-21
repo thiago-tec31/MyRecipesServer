@@ -15,6 +15,7 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
+import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
@@ -224,6 +225,63 @@ class RecipesRoutesTest {
         val responseBody = response.body<List<RecipesResponse>>()
 
         assertThat(responseBody).isNotEmpty()
+    }
+
+    @Test
+    fun update() = testApplication {
+
+        environment { applicationConfig }
+
+        var client = createClient {
+            install(ContentNegotiation) {
+                gson()
+            }
+        }
+
+        var httpResponse = client.post("/api/v1/users/login") {
+            contentType(ContentType.Application.Json)
+            setBody(authUserRequest)
+        }
+
+        val tokenResponse = httpResponse.body<TokenResponse>()
+
+        client = createClient {
+            install(ContentNegotiation) {
+                gson()
+            }
+            install(Auth) {
+                bearer {
+                    loadTokens {
+                        BearerTokens(
+                            accessToken = tokenResponse.token.orEmpty(),
+                            refreshToken = tokenResponse.token.orEmpty()
+                        )
+                    }
+                }
+            }
+        }
+
+        httpResponse = client.get("/api/v1/recipes") {
+            contentType(ContentType.Application.Json)
+        }
+
+        val result = httpResponse.body<List<RecipesResponse>>()
+        val recipeId = result.first().id
+
+        httpResponse = client.put("/api/v1/recipes/${recipeId}") {
+            contentType(ContentType.Application.Json)
+            setBody(updateRecipeRequest)
+        }
+
+        val responseBody = httpResponse.body<SimpleResponse>()
+
+        val responseText = httpResponse.bodyAsText()
+        println("ResponseText: $responseText")
+
+        assertThat(httpResponse.status).isEqualTo(HttpStatusCode.OK)
+        assertThat(responseBody).isNotNull()
+
+        client.close()
     }
 
 }

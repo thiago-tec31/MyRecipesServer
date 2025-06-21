@@ -135,9 +135,9 @@ fun Route.search(
 fun Route.update(
     updateRecipeService: UpdateRecipeService
 ) {
-    put(Constants.PATH_SEARCH) {
+    put(Constants.PATH_ID) {
         val userId = call.getUserAuthentication()
-        val recipeId = call.parameters[Constants.PATH_ID]
+        val recipeId = call.parameters[Constants.PARAM_ID]
         if (recipeId == null) {
             call.respond(HttpStatusCode.BadRequest, ErrorCodes.INVALID_PARAMETERS.message)
             return@put
