@@ -17,9 +17,9 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class LoginUserServiceTest {
 
@@ -44,7 +44,7 @@ class LoginUserServiceTest {
         token = Constants.FAKE_TOKEN
     )
 
-    @BeforeTest
+    @BeforeEach
     fun setUp() {
         tokenService = mockk()
         bCryptPasswordService = mockk()
@@ -56,7 +56,7 @@ class LoginUserServiceTest {
         )
     }
 
-    @AfterTest
+    @AfterEach
     fun tearDown() {
         clearAllMocks()
     }

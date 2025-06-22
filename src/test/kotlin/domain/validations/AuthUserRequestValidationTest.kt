@@ -7,9 +7,11 @@ import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AuthUserRequestValidationTest {
 
     private lateinit var validator: AuthValidationUserRequest
@@ -18,7 +20,7 @@ class AuthUserRequestValidationTest {
         email = "alex@gmail.com", password = "password123"
     )
 
-    @BeforeTest
+    @BeforeEach
     fun setUp() {
         validator = AuthValidationUserRequestImpl()
     }

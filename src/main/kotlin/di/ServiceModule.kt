@@ -2,6 +2,7 @@ package com.br.di
 
 import com.br.domain.services.password.BCryptPasswordService
 import com.br.domain.services.recipes.CreateRecipeService
+import com.br.domain.services.recipes.DeleteRecipeService
 import com.br.domain.services.recipes.FindUserRecipesService
 import com.br.domain.services.recipes.GetRecipeByIdService
 import com.br.domain.services.recipes.GetUserRecipesService
@@ -51,6 +52,13 @@ object ServiceModule {
                 recipesReadOnlyRepository = get(),
                 recipesWriteOnlyRepository = get(),
                 validationRecipeRequest = get()
+            )
+        }
+
+        single<DeleteRecipeService> {
+            DeleteRecipeService(
+                recipesReadOnlyRepository = get(),
+                recipesWriteOnlyRepository = get()
             )
         }
     }

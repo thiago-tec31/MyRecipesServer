@@ -8,9 +8,11 @@ import com.br.util.SuccessCodes
 import com.google.common.truth.Truth.assertThat
 import domain.model.UserFactory
 import kotlinx.coroutines.runBlocking
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AddValidationRecipeRequestTest {
 
     private lateinit var addValidationRecipeRequest: AddValidationRecipeRequest
@@ -18,7 +20,7 @@ class AddValidationRecipeRequestTest {
     private val request = AddUpdateRecipesRequestFactory().create()
     private val userAnna = UserFactory().create(UserFactory.UserFake.Anna)
 
-    @BeforeTest
+    @BeforeEach
     fun setUp() {
         addValidationRecipeRequest = AddValidationRecipeRequestImpl()
     }

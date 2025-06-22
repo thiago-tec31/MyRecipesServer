@@ -3,6 +3,7 @@ package com.br.plugins
 import com.br.application.routes.recipesRoutes
 import com.br.application.routes.usersRoute
 import com.br.domain.services.recipes.CreateRecipeService
+import com.br.domain.services.recipes.DeleteRecipeService
 import com.br.domain.services.recipes.FindUserRecipesService
 import com.br.domain.services.recipes.GetRecipeByIdService
 import com.br.domain.services.recipes.GetUserRecipesService
@@ -25,6 +26,7 @@ fun Application.configureRouting() {
     val findUserRecipesService by inject<FindUserRecipesService>()
     val getRecipeByIdService by inject<GetRecipeByIdService>()
     val updateRecipeService by inject<UpdateRecipeService>()
+    val deleteRecipeService by inject<DeleteRecipeService>()
 
     install(Routing) {
         usersRoute(registerUserService, loginUserService, getProfileUserService)
@@ -33,7 +35,8 @@ fun Application.configureRouting() {
             getUserRecipesService,
             findUserRecipesService,
             getRecipeByIdService,
-            updateRecipeService
+            updateRecipeService,
+            deleteRecipeService
         )
     }
 }

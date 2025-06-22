@@ -10,11 +10,14 @@ import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.util.UUID
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetUserRecipesServiceTest {
 
     private lateinit var recipesReadOnlyRepository: RecipesReadOnlyRepository
@@ -29,13 +32,13 @@ class GetUserRecipesServiceTest {
         recipesFactoryFake = RecipesFactory.RecipesFactoryFake.Anna
     )
 
-    @BeforeTest
+    @BeforeEach
     fun setUp() {
         recipesReadOnlyRepository = mockk()
         getUserRecipesService = GetUserRecipesService(recipesReadOnlyRepository)
     }
 
-    @AfterTest
+    @AfterEach
     fun tearDown() {
         clearAllMocks()
     }

@@ -15,11 +15,13 @@ import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.util.UUID
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UpdateRecipeServiceTest {
 
     private lateinit var addValidationRecipeRequest: AddValidationRecipeRequest
@@ -42,7 +44,7 @@ class UpdateRecipeServiceTest {
         message = SuccessCodes.VALID_REGISTRATION.message
     )
 
-    @BeforeTest
+    @BeforeEach
     fun setUp() {
         addValidationRecipeRequest = mockk()
         recipesReadOnlyRepository = mockk()
@@ -55,7 +57,7 @@ class UpdateRecipeServiceTest {
         )
     }
 
-    @AfterTest
+    @AfterEach
     fun tearDown() {
         clearAllMocks()
     }

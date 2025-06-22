@@ -4,6 +4,7 @@ import com.br.application.payloads.requests.AddUpdateRecipesRequest
 import com.br.application.payloads.responses.ErrorResponse
 import com.br.domain.extensions.getUserAuthentication
 import com.br.domain.services.recipes.CreateRecipeService
+import com.br.domain.services.recipes.DeleteRecipeService
 import com.br.domain.services.recipes.FindUserRecipesService
 import com.br.domain.services.recipes.GetRecipeByIdService
 import com.br.domain.services.recipes.GetUserRecipesService
@@ -22,6 +23,7 @@ import io.ktor.server.application.call
 import io.ktor.server.application.log
 import io.ktor.server.request.receiveNullable
 import io.ktor.server.response.respond
+import io.ktor.server.routing.delete
 import io.ktor.server.routing.put
 
 fun Route.recipesRoutes(
@@ -29,7 +31,8 @@ fun Route.recipesRoutes(
     getUserRecipesService: GetUserRecipesService,
     findUserRecipesService: FindUserRecipesService,
     getRecipeByIdService: GetRecipeByIdService,
-    updateRecipeService: UpdateRecipeService
+    updateRecipeService: UpdateRecipeService,
+    deleteRecipeService: DeleteRecipeService
 ) {
     route(Constants.RECIPE_ROUTE) {
         authenticate {
@@ -38,6 +41,7 @@ fun Route.recipesRoutes(
             getById(getRecipeByIdService)
             search(findUserRecipesService)
             update(updateRecipeService)
+            remove(deleteRecipeService)
         }
     }
 }
@@ -107,6 +111,9 @@ fun Route.getById(
         } catch (e: ServerResponseException) {
             application.log.error(e.message)
             call.respond(HttpStatusCode.BadRequest)
+        } catch (e: IllegalArgumentException) {
+            application.log.error(e.message)
+            throw IllegalArgumentException(ErrorCodes.OBJECT_ID_ERROR.message)
         }
     }
 }
@@ -166,6 +173,37 @@ fun Route.update(
         } catch (e: ServerResponseException) {
             application.log.error(e.message)
             call.respond(HttpStatusCode.BadRequest)
+        } catch (e: IllegalArgumentException) {
+            application.log.error(e.message)
+            throw IllegalArgumentException(ErrorCodes.OBJECT_ID_ERROR.message)
+        }
+    }
+}
+
+fun Route.remove(
+    deleteRecipeService: DeleteRecipeService
+) {
+    delete(Constants.PATH_ID) {
+        val userId = call.getUserAuthentication()
+        val recipeId = call.parameters[Constants.PARAM_ID]
+        if (recipeId == null) {
+            call.respond(HttpStatusCode.BadRequest, ErrorCodes.INVALID_PARAMETERS.message)
+            return@delete
+        }
+
+        try {
+            val simpleResponse = deleteRecipeService.delete(recipeId, userId)
+            if (simpleResponse.isSuccessful) {
+                call.respond(HttpStatusCode.OK, simpleResponse)
+            } else {
+                call.respond(HttpStatusCode.BadRequest, simpleResponse)
+            }
+        } catch (e: ServerResponseException) {
+            application.log.error(e.message)
+            call.respond(HttpStatusCode.BadRequest)
+        } catch (e: IllegalArgumentException) {
+            application.log.error(e.message)
+            throw IllegalArgumentException(ErrorCodes.OBJECT_ID_ERROR.message)
         }
     }
 }

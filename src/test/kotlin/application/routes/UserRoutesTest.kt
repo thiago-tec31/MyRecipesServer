@@ -20,8 +20,14 @@ import io.ktor.http.contentType
 import io.ktor.serialization.gson.gson
 import io.ktor.server.config.ApplicationConfig
 import io.ktor.server.testing.testApplication
-import kotlin.test.Test
+import org.junit.jupiter.api.MethodOrderer
+import org.junit.jupiter.api.Order
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.TestMethodOrder
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class UserRoutesTest {
 
     private val applicationConfig = ApplicationConfig("application.conf")
@@ -35,6 +41,7 @@ class UserRoutesTest {
     )
 
     @Test
+    @Order(1)
     fun register() = testApplication {
 
         environment { applicationConfig }
@@ -45,20 +52,23 @@ class UserRoutesTest {
             }
         }
 
-        val response = client.post("/api/v1/users/register") {
+        val httpResponse = client.post("/api/v1/users/register") {
             contentType(ContentType.Application.Json)
             setBody(registerUserRequest)
         }
 
-        val simpleResponse = response.body<SimpleResponse>()
+        val simpleResponse = httpResponse.body<SimpleResponse>()
 
         println("SimpleResponse: $simpleResponse")
-        assertThat(response.status).isEqualTo(HttpStatusCode.Created)
+        assertThat(httpResponse.status).isEqualTo(HttpStatusCode.Created)
         assertThat(simpleResponse.isSuccessful).isTrue()
         assertThat(simpleResponse.message).isNotEmpty()
+
+        client.close()
     }
 
     @Test
+    @Order(2)
     fun login() = testApplication {
 
         environment { applicationConfig }
@@ -69,21 +79,24 @@ class UserRoutesTest {
             }
         }
 
-        val response = client.post("/api/v1/users/login") {
+        val httpResponse = client.post("/api/v1/users/login") {
             contentType(ContentType.Application.Json)
             setBody(authUserRequest)
         }
 
-        val tokenResponse = response.body<TokenResponse>()
+        val tokenResponse = httpResponse.body<TokenResponse>()
 
         println("TokenResponse: $tokenResponse")
-        assertThat(response.status).isEqualTo(HttpStatusCode.OK)
+        assertThat(httpResponse.status).isEqualTo(HttpStatusCode.OK)
         assertThat(tokenResponse.isSuccessful).isTrue()
         assertThat(tokenResponse.token).isNotEmpty()
         assertThat(tokenResponse.message).isNotEmpty()
+
+        client.close()
     }
 
     @Test
+    @Order(3)
     fun getProfile() = testApplication {
 
         environment { applicationConfig }
@@ -94,12 +107,12 @@ class UserRoutesTest {
             }
         }
 
-        val responseLogin = client.post("/api/v1/users/login") {
+        var httpResponse = client.post("/api/v1/users/login") {
             contentType(ContentType.Application.Json)
             setBody(authUserRequest)
         }
 
-        val tokenResponse = responseLogin.body<TokenResponse>()
+        val tokenResponse = httpResponse.body<TokenResponse>()
 
         client = createClient {
             install(ContentNegotiation) {
@@ -117,16 +130,18 @@ class UserRoutesTest {
             }
         }
 
-        val response = client.get("/api/v1/users/profile") {
+        httpResponse = client.get("/api/v1/users/profile") {
             contentType(ContentType.Application.Json)
             setBody(registerUserRequest)
         }
 
-        val userResponse = response.body<UserResponse>()
+        val userResponse = httpResponse.body<UserResponse>()
 
         println("UserResponse: $userResponse")
-        assertThat(response.status).isEqualTo(HttpStatusCode.OK)
+        assertThat(httpResponse.status).isEqualTo(HttpStatusCode.OK)
         assertThat(userResponse).isNotNull()
+
+        client.close()
     }
 
 }
