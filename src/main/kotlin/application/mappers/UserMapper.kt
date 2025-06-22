@@ -1,9 +1,9 @@
 package com.br.application.mappers
 
 import com.br.application.payloads.responses.UserResponse
-import com.br.domain.entity.User
+import com.br.domain.entity.Users
 
-fun User?.toUserResponse(): UserResponse {
+fun Users?.toUserResponse(): UserResponse {
     return UserResponse(
         id = this?.id.orEmpty(),
         name = this?.name.orEmpty(),

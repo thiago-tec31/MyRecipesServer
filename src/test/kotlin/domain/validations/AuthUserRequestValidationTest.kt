@@ -1,24 +1,28 @@
-package com.br.domain.validations
+package domain.validations
 
-import com.br.application.payloads.requests.AuthUserRequestFactory
+import application.payloads.requests.AuthUserRequestFactory
+import com.br.domain.validations.AuthValidationUserRequest
+import com.br.domain.validations.AuthValidationUserRequestImpl
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AuthUserRequestValidationTest {
 
-    private lateinit var validator: AuthUserRequestValidation
+    private lateinit var validator: AuthValidationUserRequest
 
     private val authUserRequest = AuthUserRequestFactory().create(
         email = "alex@gmail.com", password = "password123"
     )
 
-    @BeforeTest
+    @BeforeEach
     fun setUp() {
-        validator = AuthUserRequestValidationImpl()
+        validator = AuthValidationUserRequestImpl()
     }
 
     @Test

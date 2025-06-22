@@ -1,11 +1,11 @@
 package com.br.application.routes
 
-import application.payloads.requests.RegisterUserRequest
+import com.br.application.payloads.requests.RegisterUserRequest
 import com.br.application.payloads.requests.AuthUserRequest
 import com.br.domain.extensions.getUserAuthentication
-import com.br.domain.services.user.RegisterUserService
-import com.br.domain.services.user.GetProfileUserService
-import com.br.domain.services.user.LoginUserService
+import com.br.domain.services.users.RegisterUserService
+import com.br.domain.services.users.GetProfileUserService
+import com.br.domain.services.users.LoginUserService
 import com.br.util.Constants
 import com.br.util.ErrorCodes
 import io.ktor.client.plugins.ServerResponseException

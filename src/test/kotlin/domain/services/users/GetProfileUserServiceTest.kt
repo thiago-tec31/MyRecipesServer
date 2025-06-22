@@ -1,17 +1,20 @@
-package com.br.domain.services.user
+package domain.services.users
 
 import com.br.application.mappers.toUserResponse
-import com.br.domain.model.UserFactory
+import domain.model.UserFactory
+import com.br.domain.services.users.GetProfileUserService
 import com.br.infra.repository.user.UserReadOnlyRepository
 import com.google.common.truth.Truth.assertThat
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetProfileUserServiceTest {
 
     private lateinit var userReadOnlyRepository: UserReadOnlyRepository
@@ -20,13 +23,13 @@ class GetProfileUserServiceTest {
 
     private val userAnna = UserFactory().create(UserFactory.UserFake.Anna)
 
-    @BeforeTest
+    @BeforeEach
     fun setUp() {
         userReadOnlyRepository = mockk()
         getProfileUserService = GetProfileUserService(userReadOnlyRepository)
     }
 
-    @AfterTest
+    @AfterEach
     fun tearDown() {
         clearAllMocks()
     }

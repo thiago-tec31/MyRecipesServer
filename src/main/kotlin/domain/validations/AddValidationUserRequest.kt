@@ -1,6 +1,6 @@
 package com.br.domain.validations
 
-import application.payloads.requests.RegisterUserRequest
+import com.br.application.payloads.requests.RegisterUserRequest
 import com.br.application.payloads.responses.SimpleResponse
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes

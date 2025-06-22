@@ -1,20 +1,24 @@
-package com.br.domain.validations
+package domain.validations
 
-import com.br.application.payloads.requests.RegisterUserRequestFactory
+import application.payloads.requests.RegisterUserRequestFactory
+import com.br.domain.validations.AddValidationUserRequest
+import com.br.domain.validations.AddValidationUserRequestImpl
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AddValidationUserRequestTest {
 
     private lateinit var validator: AddValidationUserRequest
 
     private val registerUserRequest = RegisterUserRequestFactory().create()
 
-    @BeforeTest
+    @BeforeEach
     fun setUp() {
         validator = AddValidationUserRequestImpl()
     }
