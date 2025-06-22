@@ -53,3 +53,28 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.register<Test>("unitTest") {
+    useJUnitPlatform {
+        includeTags("unit")
+    }
+}
+
+tasks.register<Test>("userRoutesTest") {
+    useJUnitPlatform {
+        includeTags("integration")
+    }
+    filter {
+        includeTestsMatching("application.routes.UserRoutesTest")
+    }
+}
+
+tasks.register<Test>("recipesRoutesTest") {
+    useJUnitPlatform {
+        includeTags("integration")
+    }
+    filter {
+        includeTestsMatching("application.routes.RecipesRoutesTest")
+    }
+}
+
