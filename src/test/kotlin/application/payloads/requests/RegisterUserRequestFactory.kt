@@ -1,6 +1,6 @@
-package com.br.application.payloads.requests
+package application.payloads.requests
 
-import application.payloads.requests.RegisterUserRequest
+import com.br.application.payloads.requests.RegisterUserRequest
 
 class RegisterUserRequestFactory {
     fun create(): RegisterUserRequest = RegisterUserRequest(

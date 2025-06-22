@@ -1,7 +1,7 @@
 package com.br.plugins
 
 import com.br.domain.services.token.TokenService
-import com.br.domain.services.user.GetUserByIdService
+import com.br.domain.services.users.GetUserByIdService
 import io.ktor.server.application.*
 import io.ktor.server.auth.Principal
 import io.ktor.server.auth.authentication

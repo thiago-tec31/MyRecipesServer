@@ -40,9 +40,16 @@ dependencies {
     implementation(libs.ktor.koin.logger)
     implementation(libs.ktor.bcrypt)
     implementation(libs.kotlin.mongodb.courotine)
+    testImplementation(libs.ktor.junit5)
+    testImplementation(libs.ktor.junit5.api)
+    testImplementation(libs.ktor.junit5.engine)
     testImplementation(libs.ktor.turbine)
     testImplementation(libs.ktor.mockk)
     testImplementation(libs.ktor.truth)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

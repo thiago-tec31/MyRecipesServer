@@ -1,12 +1,13 @@
-package com.br.domain.services.user
+package domain.services.users
 
-import com.br.application.payloads.requests.AuthUserRequestFactory
-import com.br.application.payloads.response.TokenResponseFactory
-import com.br.domain.model.UserFactory
+import application.payloads.requests.AuthUserRequestFactory
+import application.payloads.response.TokenResponseFactory
+import domain.model.UserFactory
 import com.br.domain.services.password.BCryptPasswordService
 import com.br.domain.services.token.TokenService
-import com.br.domain.validations.AuthUserRequestValidation
-import com.br.fake_util.Constants
+import com.br.domain.services.users.LoginUserService
+import com.br.domain.validations.AuthValidationUserRequest
+import fake_util.Constants
 import com.br.infra.repository.user.UserReadOnlyRepository
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
@@ -16,15 +17,15 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class LoginUserServiceTest {
 
     private lateinit var tokenService: TokenService
     private lateinit var bCryptPasswordService: BCryptPasswordService
-    private lateinit var authUserRequestValidation: AuthUserRequestValidation
+    private lateinit var authUserRequestValidation: AuthValidationUserRequest
     private lateinit var userReadOnlyRepository: UserReadOnlyRepository
 
 
@@ -43,7 +44,7 @@ class LoginUserServiceTest {
         token = Constants.FAKE_TOKEN
     )
 
-    @BeforeTest
+    @BeforeEach
     fun setUp() {
         tokenService = mockk()
         bCryptPasswordService = mockk()
@@ -55,7 +56,7 @@ class LoginUserServiceTest {
         )
     }
 
-    @AfterTest
+    @AfterEach
     fun tearDown() {
         clearAllMocks()
     }

@@ -1,4 +1,4 @@
-package com.br.fake_util
+package fake_util
 
 object Constants {
     const val FAKE_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiw" +

@@ -1,10 +1,11 @@
-package com.br.domain.services.user
+package domain.services.users
 
-import com.br.application.payloads.requests.RegisterUserRequestFactory
-import com.br.application.payloads.response.SimpleResponseFactory
+import application.payloads.requests.RegisterUserRequestFactory
+import application.payloads.response.SimpleResponseFactory
 import com.br.domain.services.password.BCryptPasswordService
+import com.br.domain.services.users.RegisterUserService
 import com.br.domain.validations.AddValidationUserRequest
-import com.br.fake_util.Constants
+import fake_util.Constants
 import com.br.infra.repository.user.UserReadOnlyRepository
 import com.br.infra.repository.user.UserWriteOnlyRepository
 import com.br.util.ErrorCodes
@@ -14,10 +15,12 @@ import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AddUserServiceTest {
 
     private lateinit var addValidationUserRequest: AddValidationUserRequest
@@ -34,7 +37,7 @@ class AddUserServiceTest {
         message = SuccessCodes.VALID_REGISTRATION.message
     )
 
-    @BeforeTest
+    @BeforeEach
     fun setUp() {
         addValidationUserRequest = mockk()
         bCryptPasswordService = mockk()
@@ -46,7 +49,7 @@ class AddUserServiceTest {
         )
     }
 
-    @AfterTest
+    @AfterEach
     fun tearDown() {
         clearAllMocks()
     }

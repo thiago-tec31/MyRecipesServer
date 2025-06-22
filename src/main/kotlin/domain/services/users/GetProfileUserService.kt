@@ -1,4 +1,4 @@
-package com.br.domain.services.user
+package com.br.domain.services.users
 
 import com.br.application.mappers.toUserResponse
 import com.br.application.payloads.responses.UserResponse

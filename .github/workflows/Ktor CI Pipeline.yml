@@ -37,5 +37,12 @@ jobs:
           distribution: 'adopt'
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-      - name: Run Ktor tests
-        run: ./gradlew test
+
+      - name: Run UserRoutesTest
+        run: ./gradlew test --tests "application.routes.UserRoutesTest"
+
+      - name: Run RecipesRoutesTest
+        run: ./gradlew test --tests "application.routes.RecipesRoutesTest"
+
+      - name: Run remaining tests
+        run: ./gradlew test -x test --tests "application.routes.UserRoutesTest" --tests "application.routes.RecipesRoutesTest"
