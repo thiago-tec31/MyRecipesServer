@@ -46,7 +46,7 @@ class UserRoutesTest {
     @Order(1)
     fun register() = testApplication {
 
-        environment { applicationConfig }
+        environment { config = applicationConfig }
 
         val client = createClient {
             install(ContentNegotiation) {
@@ -73,7 +73,7 @@ class UserRoutesTest {
     @Order(2)
     fun login() = testApplication {
 
-        environment { applicationConfig }
+        environment { config = applicationConfig }
 
         val client = createClient {
             install(ContentNegotiation) {
@@ -101,7 +101,7 @@ class UserRoutesTest {
     @Order(3)
     fun getProfile() = testApplication {
 
-        environment { applicationConfig }
+        environment { config = applicationConfig }
 
         var client = createClient {
             install(ContentNegotiation) {

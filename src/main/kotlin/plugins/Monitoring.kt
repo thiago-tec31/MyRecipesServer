@@ -3,7 +3,7 @@ package com.br.plugins
 import com.codahale.metrics.*
 import io.ktor.server.application.*
 import io.ktor.server.metrics.dropwizard.*
-import io.ktor.server.plugins.callloging.*
+import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.request.*
 import java.util.concurrent.TimeUnit
 import org.slf4j.event.*

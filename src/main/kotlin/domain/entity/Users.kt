@@ -17,4 +17,4 @@ data class Users(
     @BsonRepresentation(BsonType.OBJECT_ID)
     override val id: String = ObjectId().toHexString(),
     override val createdAt: String = Clock.System.now().formatInstantForBrazilian()
-) : Basic(), Principal
+) : Basic()
