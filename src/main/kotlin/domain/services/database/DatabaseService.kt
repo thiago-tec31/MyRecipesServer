@@ -1,4 +1,4 @@
-package com.br.domain.database
+package com.br.domain.services.database
 
 import application.config.AppConfig
 import com.mongodb.kotlin.client.coroutine.MongoClient

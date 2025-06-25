@@ -23,6 +23,10 @@ class UpdateRecipeService(
             return SimpleResponse(false, ErrorCodes.NO_RECIPE_FOUND.message)
         }
 
+        recipesReadOnlyRepository.getById(recipeId, userId)
+            ?: return SimpleResponse(false, ErrorCodes.RECIPE_UPDATE_DENIED.message)
+
+
         val validator = validationRecipeRequest.validator(addUpdateRecipesRequest, userId)
         if (!validator.isSuccessful) {
             return validator

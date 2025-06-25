@@ -17,10 +17,12 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.util.UUID
 
+@Tag("unit")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UpdateRecipeServiceTest {
 
@@ -70,7 +72,7 @@ class UpdateRecipeServiceTest {
 
         coEvery { recipesReadOnlyRepository.checkIfExists(any()) } returns true
         coEvery { addValidationRecipeRequest.validator(any(), any()) } returns simpleResponse
-
+        coEvery { recipesReadOnlyRepository.getById(any(), any()) } returns recipeAnna
         coEvery { recipesWriteOnlyRepository.update(any(), any()) } returns true
 
         // WHEN
@@ -89,7 +91,7 @@ class UpdateRecipeServiceTest {
 
         coEvery { recipesReadOnlyRepository.checkIfExists(any()) } returns true
         coEvery { addValidationRecipeRequest.validator(any(), any()) } returns simpleResponse
-
+        coEvery { recipesReadOnlyRepository.getById(any(), any()) } returns recipeAnna
         coEvery { recipesWriteOnlyRepository.update(any(), any()) } returns false
 
         // WHEN
@@ -98,6 +100,23 @@ class UpdateRecipeServiceTest {
         // THEN
         assertThat(result.isSuccessful).isFalse()
         assertThat(result.message).isEqualTo(ErrorCodes.RECIPE_UPDATE_ERROR.message)
+    }
+
+    @Test
+    fun `should return update denied when trying to delete a recipe that does not belong to the user`() = runBlocking {
+        // GIVEN
+        val userAnnaId = userAnna.id
+        val recipeId = recipeAnna.id
+
+        coEvery { recipesReadOnlyRepository.checkIfExists(any()) } returns true
+        coEvery { recipesReadOnlyRepository.getById(any(), any()) } returns null
+
+        // WHEN
+        val result = updateRecipeService.update(userAnnaId, recipeId, addUpdateRecipesRequest)
+
+        // THEN
+        assertThat(result.isSuccessful).isFalse()
+        assertThat(result.message).isEqualTo(ErrorCodes.RECIPE_UPDATE_DENIED.message)
     }
 
 }

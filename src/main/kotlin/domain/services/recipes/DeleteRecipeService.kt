@@ -19,6 +19,9 @@ class DeleteRecipeService(
             )
         }
 
+        recipesReadOnlyRepository.getById(recipeId, userId)
+            ?: return SimpleResponse(false, ErrorCodes.RECIPE_DELETION_DENIED.message)
+
         val result = recipesWriteOnlyRepository.remove(recipeId)
         return if (result) {
             SimpleResponse(isSuccessful = true, message = SuccessCodes.RECIPE_DELETION_SUCCESS.message)
