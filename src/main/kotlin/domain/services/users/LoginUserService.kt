@@ -30,11 +30,19 @@ class LoginUserService(
             hashedPassword = hashedPassword
         )
 
-        if (verifyPassword) {
+        return if (verifyPassword) {
             val token = tokenService.generateToken(userId = userModel.id)
-            return TokenResponse(isSuccessful = true, message = SuccessCodes.LOGIN_SUCCESS.message, token = token)
+            TokenResponse(
+                isSuccessful = true,
+                message = SuccessCodes.LOGIN_SUCCESS.message,
+                token = token,
+                userName = userModel.name
+            )
         } else {
-            return TokenResponse(isSuccessful = false, message = ErrorCodes.INCORRECT_PASSWORD.message)
+            TokenResponse(
+                isSuccessful = false,
+                message = ErrorCodes.INCORRECT_PASSWORD.message
+            )
         }
 
     }

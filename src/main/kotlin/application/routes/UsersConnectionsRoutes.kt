@@ -7,8 +7,7 @@ import com.br.util.Constants
 import com.br.util.Constants.PATH_ID
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.application
-import io.ktor.server.application.call
+import io.ktor.server.routing.application
 import io.ktor.server.application.log
 import io.ktor.server.auth.authenticate
 import io.ktor.server.response.respond

@@ -46,7 +46,7 @@ class RecipesRoutesTest {
     @Order(1)
     fun create() = testApplication {
 
-        environment { applicationConfig }
+        environment { config = applicationConfig }
 
         var client = createClient {
             install(ContentNegotiation) {
@@ -94,7 +94,7 @@ class RecipesRoutesTest {
     @Order(2)
     fun getAll() = testApplication {
 
-        environment { applicationConfig }
+        environment { config = applicationConfig }
 
         var client = createClient {
             install(ContentNegotiation) {
@@ -143,7 +143,7 @@ class RecipesRoutesTest {
     @Order(3)
     fun getById() = testApplication {
 
-        environment { applicationConfig }
+        environment { config = applicationConfig }
 
         var client = createClient {
             install(ContentNegotiation) {
@@ -200,7 +200,7 @@ class RecipesRoutesTest {
     @Order(4)
     fun search() = testApplication {
 
-        environment { applicationConfig }
+        environment { config = applicationConfig }
 
         var client = createClient {
             install(ContentNegotiation) {
@@ -250,7 +250,7 @@ class RecipesRoutesTest {
     @Order(5)
     fun update() = testApplication {
 
-        environment { applicationConfig }
+        environment { config = applicationConfig }
 
         var client = createClient {
             install(ContentNegotiation) {
@@ -308,7 +308,7 @@ class RecipesRoutesTest {
     @Order(6)
     fun delete() = testApplication {
 
-        environment { applicationConfig }
+        environment { config = applicationConfig }
 
         var client = createClient {
             install(ContentNegotiation) {

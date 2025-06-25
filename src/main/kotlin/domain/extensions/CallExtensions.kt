@@ -4,13 +4,9 @@ import com.br.domain.entity.Users
 import com.br.domain.exceptions.UserAuthenticationNotFoundException
 import com.br.util.ErrorCodes
 import io.ktor.server.application.ApplicationCall
-import io.ktor.server.auth.authentication
+import io.ktor.server.auth.principal
 
 fun ApplicationCall.getUserAuthentication() : String {
-    val usersModel = authentication.principal<Users>()
-    if (usersModel != null) {
-        return usersModel.id
-    } else {
-        throw UserAuthenticationNotFoundException(ErrorCodes.USER_NOT_LOGGED_IN.message)
-    }
+    val user = principal<Users>()
+    return user?.id ?: throw UserAuthenticationNotFoundException(ErrorCodes.USER_NOT_LOGGED_IN.message)
 }

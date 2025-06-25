@@ -19,7 +19,9 @@ import com.br.domain.services.users.LoginUserService
 import com.br.domain.services.usersconnections.AddUsersConnectionsService
 import com.br.domain.services.usersconnections.GetUsersConnectionsService
 import com.br.domain.services.usersconnections.RemoveUsersConnectionsService
+import com.br.util.Constants
 import io.ktor.server.application.*
+import io.ktor.server.plugins.swagger.swaggerUI
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
@@ -45,7 +47,7 @@ fun Application.configureRouting() {
     val addUsersConnectionsService by inject<AddUsersConnectionsService>()
 
 
-    install(Routing) {
+    routing {
         usersRoute(registerUserService, loginUserService, getProfileUserService)
         recipesRoutes(
             createRecipeService,
@@ -65,5 +67,10 @@ fun Application.configureRouting() {
             qrCodeGeneratorService,
             addUsersConnectionsService
         )
+
+        swaggerUI(path = "api/v1/users_swagger", swaggerFile = "openapi/users_documentation.yaml")
+        swaggerUI(path = "api/v1/recipes_swagger", swaggerFile = "openapi/recipes_documentation.yaml")
+        swaggerUI(path = "api/v1/usersConnections_swagger", swaggerFile = "openapi/usersConnections_documentation.yaml")
     }
+
 }

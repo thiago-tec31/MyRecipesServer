@@ -1,0 +1,146 @@
+openapi: 3.0.0
+info:
+  title: Recipes App
+  description: Gerenciamento de usuários
+  version: 1.0.0
+  license:
+    name: Apache 2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0.html"
+servers:
+  - url: https://myrecipesserver-4wgv.onrender.com
+    description: Produção
+  - url: http://localhost:8080
+    description: Local
+paths:
+  /api/v1/users/profile:
+    get:
+      summary: Obter perfil do usuário
+      description: Obtém as informações do perfil do usuário autenticado
+      tags:
+        - Usuarios
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Perfil do usuário retornado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          description: Não autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Requisição inválida
+  /api/v1/users/login:
+    post:
+      summary: Login de usuário
+      description: Autentica o usuário com e-mail e senha
+      tags:
+        - Usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthUserRequest'
+      responses:
+        '200':
+          description: Login bem-sucedido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: Requisição inválida
+        '500':
+          description: Erro interno do servidor
+  /api/v1/users:
+    post:
+      summary: Criar um novo usuário
+      description: Cria um novo usuário com os detalhes fornecidos
+      tags:
+        - Usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddUserRequest'
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '400':
+          description: Requisição inválida
+        '500':
+          description: Erro interno do servidor
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Autenticação Bearer para acessar endpoints protegidos
+  schemas:
+    AddUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        phone:
+          type: string
+      required:
+        - name
+        - email
+        - password
+        - phone
+    AuthUserRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - email
+        - password
+    TokenResponse:
+      type: object
+      properties:
+        isSuccessful:
+          type: boolean
+        message:
+          type: string
+        token:
+          type: string
+        userName:
+          type: string
+    UserProfile:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+    SimpleResponse:
+      type: object
+      properties:
+        isSuccessful:
+          type: boolean
+        message:
+          type: string

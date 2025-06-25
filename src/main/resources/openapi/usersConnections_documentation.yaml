@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: Recipes App
+  description: Gerenciamento de conexões entre usuários
+  version: 1.0.0
+servers:
+  - url: https://myrecipesserver-4wgv.onrender.com
+    description: Produção
+  - url: http://localhost:8080
+    description: Local
+paths:
+  /users-connections:
+    get:
+      summary: Obter conexões do usuário
+      description: Obtém as conexões do usuário autenticado
+      tags:
+        - Conexões de Usuários
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Conexões do usuário retornadas com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+        '401':
+          description: Não autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor
+  /users-connections/{id}:
+    delete:
+      summary: Remover conexão de usuário
+      description: Remove uma conexão de usuário específica
+      tags:
+        - Conexões de Usuários
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: ID do usuário a ser removido da conexão
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Conexão de usuário removida com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '401':
+          description: Não autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Conexão de usuário não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Autenticação Bearer para acessar endpoints protegidos
+  schemas:
+    UserResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        createAt:
+          type: string
+          format: date-time
+    SimpleResponse:
+      type: object
+      properties:
+        isSuccessful:
+          type: boolean
+        message:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        httpCode:
+          type: integer
+        message:
+          type: string
