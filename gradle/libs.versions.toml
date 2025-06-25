@@ -11,8 +11,7 @@ ktor-bcrypt-version = "0.10.2"
 ktor-turbine-version = "1.1.0"
 ktor-mockk-version = "1.13.10"
 ktor-truth-version = "1.4.2"
-ktor-junit5-version = "5.10.3"
-ktor-junit5-engine-version = "5.10.2"
+ktor-unit-bom = "5.10.0"
 
 
 [libraries]
@@ -45,9 +44,11 @@ ktor-mockk = { module = "io.mockk:mockk", version.ref = "ktor-mockk-version" }
 ktor-truth = { module = "com.google.truth:truth", version.ref = "ktor-truth-version" }
 ktor-client-auth = { module = "io.ktor:ktor-client-auth-jvm" }
 ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation-jvm" }
-ktor-junit5 = { module = "org.junit.jupiter:junit-jupiter", version.ref = "ktor-junit5-version" }
-ktor-junit5-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "ktor-junit5-version" }
-ktor-junit5-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "ktor-junit5-engine-version" }
+
+ktor-junit5-bom = { module = "org.junit:junit-bom", version.ref = "ktor-unit-bom" }
+ktor-junit5-api = { module = "org.junit.jupiter:junit-jupiter-api" }
+ktor-junit5-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+ktor-junit5 = { module = "org.junit.platform:junit-platform-launcher" }
 
 
 [plugins]

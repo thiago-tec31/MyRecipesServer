@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.ktor.koin.logger)
     implementation(libs.ktor.bcrypt)
     implementation(libs.kotlin.mongodb.courotine)
+    testImplementation(platform(libs.ktor.junit5.bom))
     testImplementation(libs.ktor.junit5)
     testImplementation(libs.ktor.junit5.api)
     testImplementation(libs.ktor.junit5.engine)
