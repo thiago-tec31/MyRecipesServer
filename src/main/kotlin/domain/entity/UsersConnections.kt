@@ -7,7 +7,7 @@ import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.codecs.pojo.annotations.BsonRepresentation
 import org.bson.types.ObjectId
 
-data class UsersConnection(
+data class UsersConnections(
     val userId: String,
     val connectedWithUserId: String,
     @BsonId

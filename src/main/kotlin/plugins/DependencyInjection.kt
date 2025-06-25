@@ -5,7 +5,8 @@ import com.br.di.DatabaseModule
 import com.br.di.RepositoryModule
 import com.br.di.ServiceModule
 import com.br.di.ValidationsModule
-import com.br.domain.database.DatabaseService
+import com.br.di.InfraModule
+import com.br.domain.services.database.DatabaseService
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStopped
 import io.ktor.server.application.install
@@ -17,7 +18,8 @@ fun Application.configureDependencyInjection() {
             DatabaseModule.module +
             RepositoryModule.module +
             ServiceModule.module +
-            ValidationsModule.module
+            ValidationsModule.module +
+            InfraModule.module
 
     install(Koin) {
         modules(modules)

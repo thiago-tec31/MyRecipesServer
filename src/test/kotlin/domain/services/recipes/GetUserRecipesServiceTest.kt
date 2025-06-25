@@ -1,11 +1,15 @@
 package domain.services.recipes
 
 import com.br.application.mappers.toRecipesResponse
+import com.br.domain.entity.CategoryEnum
 import com.br.domain.services.recipes.GetUserRecipesService
 import com.br.infra.repository.recipes.RecipesReadOnlyRepository
+import com.br.infra.repository.user.UserReadOnlyRepository
+import com.br.infra.repository.usersconnections.UsersConnectionReadOnlyRepository
 import com.google.common.truth.Truth.assertThat
 import domain.model.RecipesFactory
 import domain.model.UserFactory
+import domain.model.UsersConnectionsFactory
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -22,10 +26,21 @@ import java.util.UUID
 class GetUserRecipesServiceTest {
 
     private lateinit var recipesReadOnlyRepository: RecipesReadOnlyRepository
+    private lateinit var usersConnectionReadOnlyRepository: UsersConnectionReadOnlyRepository
+    private lateinit var userReadOnlyRepository: UserReadOnlyRepository
 
     private lateinit var getUserRecipesService: GetUserRecipesService
 
     private val userAnna = UserFactory().create(UserFactory.UserFake.Anna)
+    private val userAlex = UserFactory().create(UserFactory.UserFake.Alex)
+
+    private val usersConnectionsFactory = UsersConnectionsFactory().create(
+        usersConnectionFake = UsersConnectionsFactory.UsersConnectionFake.One,
+        userId = userAnna.id,
+        connectedWithUserId = userAlex.id
+    )
+
+    private val usersConnections = listOf(usersConnectionsFactory)
 
     private val recipesAnna = RecipesFactory().create(
         userId = userAnna.id,
@@ -33,10 +48,22 @@ class GetUserRecipesServiceTest {
         recipesFactoryFake = RecipesFactory.RecipesFactoryFake.Anna
     )
 
+    private val recipesAlex = RecipesFactory().create(
+        userId = userAlex.id,
+        recipeId = UUID.randomUUID().toString(),
+        recipesFactoryFake = RecipesFactory.RecipesFactoryFake.Alex
+    )
+
     @BeforeEach
     fun setUp() {
         recipesReadOnlyRepository = mockk()
-        getUserRecipesService = GetUserRecipesService(recipesReadOnlyRepository)
+        usersConnectionReadOnlyRepository = mockk()
+        userReadOnlyRepository = mockk()
+        getUserRecipesService = GetUserRecipesService(
+            recipesReadOnlyRepository,
+            userReadOnlyRepository,
+            usersConnectionReadOnlyRepository
+        )
     }
 
     @AfterEach
@@ -45,19 +72,42 @@ class GetUserRecipesServiceTest {
     }
 
     @Test
-    fun `should return list of recipes for user`() = runBlocking {
+    fun `should return list of user recipes or shared if available`() = runBlocking {
         // GIVEN
         val userAnnaId = userAnna.id
-        val recipesAnna = listOf(recipesAnna)
+        val userAlexId = userAlex.id
+        val category = 1
 
-        coEvery { recipesReadOnlyRepository.getByUser(userAnnaId, null) } returns recipesAnna
+        val recipesAnna = listOf(recipesAnna)
+        val recipesAlex = listOf(recipesAlex)
+
+        coEvery { recipesReadOnlyRepository.getByUser(
+            userId = eq(userAnnaId),
+            categoryEnum = CategoryEnum.fromInt(category)
+        ) } returns recipesAnna
+
+        coEvery {
+            recipesReadOnlyRepository.getByUser(
+                userId = eq(userAlexId),
+                categoryEnum = CategoryEnum.fromInt(category)
+            )
+        } returns recipesAlex
+
+        coEvery { usersConnectionReadOnlyRepository.getUsersConnection(eq(userAnnaId)) } returns usersConnections
+        coEvery { userReadOnlyRepository.findUsersByIds(eq(listOf(userAlexId))) } returns listOf(userAlex)
 
         // WHEN
-        val result = getUserRecipesService.getAll(userAnnaId,  null)
-        val expectedRecipesResponse = recipesAnna.map { it.toRecipesResponse() }
+        val result = getUserRecipesService.getAll(userAnnaId, category)
 
         // THEN
-        assertThat(result).isEqualTo(expectedRecipesResponse)
+        val expectedResponse = (recipesAnna + recipesAlex).map { recipe ->
+            val ownerName = if (usersConnections.isNotEmpty()) {
+                if (recipe.userId == userAlex.id) userAlex.name else null
+            } else null
+            recipe.toRecipesResponse().copy(ownerName = ownerName)
+        }
+
+        assertThat(expectedResponse).isEqualTo(result)
     }
 
 }

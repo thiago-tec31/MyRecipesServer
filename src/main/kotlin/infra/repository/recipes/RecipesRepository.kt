@@ -1,7 +1,7 @@
 package com.br.infra.repository.recipes
 
 import com.br.application.payloads.requests.AddUpdateRecipesRequest
-import com.br.domain.database.DatabaseService
+import com.br.domain.services.database.DatabaseService
 import com.br.domain.entity.CategoryEnum
 import com.br.domain.entity.Ingredients
 import com.br.domain.entity.Recipes

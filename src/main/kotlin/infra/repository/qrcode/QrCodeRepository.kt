@@ -1,6 +1,6 @@
 package com.br.infra.repository.qrcode
 
-import com.br.domain.database.DatabaseService
+import com.br.domain.services.database.DatabaseService
 import com.br.domain.entity.QrCode
 import com.br.util.Constants
 import com.br.util.ErrorCodes

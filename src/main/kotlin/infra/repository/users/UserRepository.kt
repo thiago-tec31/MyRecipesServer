@@ -1,6 +1,6 @@
 package com.br.infra.repository.user
 
-import com.br.domain.database.DatabaseService
+import com.br.domain.services.database.DatabaseService
 import com.br.domain.entity.Users
 import com.br.util.Constants
 import com.br.util.ErrorCodes
