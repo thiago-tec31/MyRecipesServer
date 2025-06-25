@@ -81,6 +81,16 @@ fun Route.createQrCodeSession(
                         val userActionRequest = GsonUtil
                             .deserialize(UserActionRequest::class.java, receivedText)
 
+                        if (userActionRequest.cancelOperation) {
+                            connectionSessionService.sendCancelConnectionMessage(
+                                userId = userId,
+                                message = Constants.OPERATION_CANCELED_BY_USER_MESSAGE
+                            )
+                            connectionSessionService.resetTimer(userId)
+                            connectionSessionService.removeAndCloseSession(userId, this)
+                            break
+                        }
+
                         val simpleResponse = addUsersConnectionsService.add(
                             isConnectionAccepted = userActionRequest.action,
                             loggedInUserId = generateQrCode.userId,

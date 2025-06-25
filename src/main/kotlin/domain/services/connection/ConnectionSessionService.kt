@@ -1,6 +1,7 @@
 package com.br.domain.services.connection
 
 import com.br.application.payloads.responses.AwaitingConnectinResponse
+import com.br.application.payloads.responses.CancelConnectionResponse
 import com.br.application.payloads.responses.ConnectionStatusResponse
 import com.br.application.payloads.responses.ErrorMessageResponse
 import com.br.application.payloads.responses.QrCodeExpiredResponse
@@ -105,6 +106,11 @@ class ConnectionSessionService(
     suspend fun sendErrorMessage(userId: String, message: String) {
         val errorMessageResponse = ErrorMessageResponse(message = message)
         sendMessageToUser(userId, errorMessageResponse)
+    }
+
+    suspend fun sendCancelConnectionMessage(userId: String, message: String) {
+        val cancelConnectionResponse = CancelConnectionResponse(message = message)
+        sendMessageToUser(userId, cancelConnectionResponse)
     }
 
     private suspend fun executeActionForUserConnections(

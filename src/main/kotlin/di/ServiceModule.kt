@@ -18,7 +18,7 @@ import com.br.domain.services.users.GetUserByIdService
 import com.br.domain.services.users.LoginUserService
 import com.br.domain.services.usersconnections.AddUsersConnectionsService
 import com.br.domain.services.usersconnections.GetUsersConnectionsService
-import com.br.domain.services.usersconnections.RemoveUsersConnections
+import com.br.domain.services.usersconnections.RemoveUsersConnectionsService
 import org.koin.dsl.module
 
 object ServiceModule {
@@ -74,8 +74,8 @@ object ServiceModule {
         single<GetUsersConnectionsService> {
             GetUsersConnectionsService(get(), get())
         }
-        single<RemoveUsersConnections> {
-            RemoveUsersConnections(get(), get())
+        single<RemoveUsersConnectionsService> {
+            RemoveUsersConnectionsService(get(), get())
         }
 
         single<QrCodeGeneratorService> {

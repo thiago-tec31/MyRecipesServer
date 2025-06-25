@@ -12,9 +12,13 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.util.UUID
 
+@Tag("unit")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DeleteRecipeServiceTest {
 
     private lateinit var recipesReadOnlyRepository: RecipesReadOnlyRepository

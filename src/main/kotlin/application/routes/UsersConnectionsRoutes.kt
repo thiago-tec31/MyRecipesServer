@@ -2,7 +2,7 @@ package com.br.application.routes
 
 import com.br.domain.extensions.getUserAuthentication
 import com.br.domain.services.usersconnections.GetUsersConnectionsService
-import com.br.domain.services.usersconnections.RemoveUsersConnections
+import com.br.domain.services.usersconnections.RemoveUsersConnectionsService
 import com.br.util.Constants
 import com.br.util.Constants.PATH_ID
 import io.ktor.client.plugins.ServerResponseException
@@ -19,12 +19,12 @@ import io.ktor.server.routing.route
 
 fun Route.usersConnectionsRoutes(
     getUsersConnectionsService: GetUsersConnectionsService,
-    removeUsersConnections: RemoveUsersConnections
+    removeUsersConnectionsService: RemoveUsersConnectionsService
 ) {
     route(Constants.USERS_CONNECTIONS_ROUTE) {
         authenticate {
             getConnectionsForUser(getUsersConnectionsService)
-            removeConnection(removeUsersConnections)
+            removeConnection(removeUsersConnectionsService)
         }
     }
 }
@@ -42,12 +42,12 @@ fun Route.getConnectionsForUser(usersConnectionsService: GetUsersConnectionsServ
     }
 }
 
-fun Route.removeConnection(removeUsersConnections: RemoveUsersConnections) {
+fun Route.removeConnection(removeUsersConnectionsService: RemoveUsersConnectionsService) {
     delete(Constants.PATH_ID) {
         try {
             val userId = call.getUserAuthentication()
             val connectedWithUserId = call.parameters[PATH_ID] ?: ""
-            val simpleResponse = removeUsersConnections.removeConnectionsForUser(
+            val simpleResponse = removeUsersConnectionsService.removeConnectionsForUser(
                 userId = userId, connectedWithUserId = connectedWithUserId
             )
 

@@ -18,7 +18,7 @@ import com.br.domain.services.users.GetProfileUserService
 import com.br.domain.services.users.LoginUserService
 import com.br.domain.services.usersconnections.AddUsersConnectionsService
 import com.br.domain.services.usersconnections.GetUsersConnectionsService
-import com.br.domain.services.usersconnections.RemoveUsersConnections
+import com.br.domain.services.usersconnections.RemoveUsersConnectionsService
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
@@ -37,7 +37,7 @@ fun Application.configureRouting() {
     val deleteRecipeService by inject<DeleteRecipeService>()
 
     val getUsersConnectionsService by inject<GetUsersConnectionsService>()
-    val removeUsersConnections by inject<RemoveUsersConnections>()
+    val removeUsersConnectionsService by inject<RemoveUsersConnectionsService>()
 
     val qrCodeReaderService by inject<QrCodeReaderService>()
     val connectionSessionService by inject<ConnectionSessionService>()
@@ -57,7 +57,7 @@ fun Application.configureRouting() {
         )
         usersConnectionsRoutes(
             getUsersConnectionsService,
-            removeUsersConnections
+            removeUsersConnectionsService
         )
         webSocketsRoutes(
             qrCodeReaderService,

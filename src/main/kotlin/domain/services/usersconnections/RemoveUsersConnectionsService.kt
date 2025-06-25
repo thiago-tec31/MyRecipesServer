@@ -6,7 +6,7 @@ import com.br.infra.repository.usersconnections.UsersConnectionWriteOnlyReposito
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
 
-class RemoveUsersConnections(
+class RemoveUsersConnectionsService(
     private val usersConnectionReadOnlyRepository: UsersConnectionReadOnlyRepository,
     private val usersConnectionWriteOnlyRepository: UsersConnectionWriteOnlyRepository
 ) {

@@ -8,5 +8,7 @@ data class UserActionRequest(
     @SerializedName("action")
     val action: Boolean,
     @SerializedName("userToConnectionId")
-    val userToConnectionId: String? = null
+    val userToConnectionId: String? = null,
+    @SerializedName("cancelOperation")
+    val cancelOperation: Boolean = false
 ): BaseModel(Constants.TYPE_USER_ACTION)

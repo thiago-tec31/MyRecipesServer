@@ -29,7 +29,7 @@ class AddUsersConnectionsService(
             return if (saveConnections(loggedInUserId.orEmpty(), userToConnected.orEmpty())) {
                 SimpleResponse(isSuccessful = true, message = SuccessCodes.CONNECTION_SUCCESS.message)
             } else {
-                SimpleResponse(isSuccessful = true, message = ErrorCodes.CONNECTION_ERROR.message)
+                SimpleResponse(isSuccessful = false, message = ErrorCodes.CONNECTION_ERROR.message)
             }
 
         } else {
