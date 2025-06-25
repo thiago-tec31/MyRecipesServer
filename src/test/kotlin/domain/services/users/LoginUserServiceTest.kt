@@ -19,8 +19,12 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@Tag("unit")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LoginUserServiceTest {
 
     private lateinit var tokenService: TokenService

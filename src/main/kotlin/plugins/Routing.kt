@@ -1,7 +1,12 @@
 package com.br.plugins
 
 import com.br.application.routes.recipesRoutes
+import com.br.application.routes.usersConnectionsRoutes
 import com.br.application.routes.usersRoute
+import com.br.application.routes.webSocketsRoutes
+import com.br.domain.services.connection.ConnectionSessionService
+import com.br.domain.services.qrcode.QrCodeGeneratorService
+import com.br.domain.services.qrcode.QrCodeReaderService
 import com.br.domain.services.recipes.CreateRecipeService
 import com.br.domain.services.recipes.DeleteRecipeService
 import com.br.domain.services.recipes.FindUserRecipesService
@@ -11,6 +16,9 @@ import com.br.domain.services.recipes.UpdateRecipeService
 import com.br.domain.services.users.RegisterUserService
 import com.br.domain.services.users.GetProfileUserService
 import com.br.domain.services.users.LoginUserService
+import com.br.domain.services.usersconnections.AddUsersConnectionsService
+import com.br.domain.services.usersconnections.GetUsersConnectionsService
+import com.br.domain.services.usersconnections.RemoveUsersConnectionsService
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
@@ -28,6 +36,15 @@ fun Application.configureRouting() {
     val updateRecipeService by inject<UpdateRecipeService>()
     val deleteRecipeService by inject<DeleteRecipeService>()
 
+    val getUsersConnectionsService by inject<GetUsersConnectionsService>()
+    val removeUsersConnectionsService by inject<RemoveUsersConnectionsService>()
+
+    val qrCodeReaderService by inject<QrCodeReaderService>()
+    val connectionSessionService by inject<ConnectionSessionService>()
+    val qrCodeGeneratorService by inject<QrCodeGeneratorService>()
+    val addUsersConnectionsService by inject<AddUsersConnectionsService>()
+
+
     install(Routing) {
         usersRoute(registerUserService, loginUserService, getProfileUserService)
         recipesRoutes(
@@ -37,6 +54,16 @@ fun Application.configureRouting() {
             getRecipeByIdService,
             updateRecipeService,
             deleteRecipeService
+        )
+        usersConnectionsRoutes(
+            getUsersConnectionsService,
+            removeUsersConnectionsService
+        )
+        webSocketsRoutes(
+            qrCodeReaderService,
+            connectionSessionService,
+            qrCodeGeneratorService,
+            addUsersConnectionsService
         )
     }
 }
