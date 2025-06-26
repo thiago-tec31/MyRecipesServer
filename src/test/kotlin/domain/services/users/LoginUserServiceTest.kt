@@ -8,7 +8,7 @@ import com.br.domain.services.token.TokenService
 import com.br.domain.services.users.LoginUserService
 import com.br.domain.validations.AuthValidationUserRequest
 import fake_util.Constants
-import com.br.infra.repository.user.UserReadOnlyRepository
+import com.br.infra.repository.users.UserReadOnlyRepository
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
 import com.google.common.truth.Truth

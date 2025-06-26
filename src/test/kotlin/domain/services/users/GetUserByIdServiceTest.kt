@@ -2,7 +2,7 @@ package domain.services.users
 
 import domain.model.UserFactory
 import com.br.domain.services.users.GetUserByIdService
-import com.br.infra.repository.user.UserReadOnlyRepository
+import com.br.infra.repository.users.UserReadOnlyRepository
 import com.google.common.truth.Truth.assertThat
 import io.mockk.clearAllMocks
 import io.mockk.coEvery

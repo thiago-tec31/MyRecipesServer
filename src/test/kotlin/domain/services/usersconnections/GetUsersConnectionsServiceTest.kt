@@ -2,7 +2,7 @@ package domain.services.usersconnections
 
 import com.br.application.mappers.toUserResponse
 import com.br.domain.services.usersconnections.GetUsersConnectionsService
-import com.br.infra.repository.user.UserReadOnlyRepository
+import com.br.infra.repository.users.UserReadOnlyRepository
 import com.br.infra.repository.usersconnections.UsersConnectionReadOnlyRepository
 import com.google.common.truth.Truth.assertThat
 import domain.model.UserFactory

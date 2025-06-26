@@ -1,6 +1,7 @@
 package com.br.plugins
 
 import com.br.application.payloads.responses.ErrorResponse
+import com.br.domain.exceptions.QrCodeServiceException
 import com.br.domain.exceptions.UserAuthenticationNotFoundException
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -52,6 +53,17 @@ fun Application.configureStatusPage() {
             call.respond(
                 message = errorResponse,
                 status = HttpStatusCode.BadRequest
+            )
+        }
+
+        exception<QrCodeServiceException> { call, cause ->
+            val errorResponse = ErrorResponse(
+                httpStatusCode = HttpStatusCode.BadRequest.value,
+                message = cause.message.orEmpty()
+            )
+            call.respond(
+                message = errorResponse,
+                status = HttpStatusCode.InternalServerError
             )
         }
 

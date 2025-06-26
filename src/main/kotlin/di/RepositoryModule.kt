@@ -6,9 +6,9 @@ import com.br.infra.repository.qrcode.QrCodeWriteOnlyRepository
 import com.br.infra.repository.recipes.RecipesReadOnlyRepository
 import com.br.infra.repository.recipes.RecipesRepository
 import com.br.infra.repository.recipes.RecipesWriteOnlyRepository
-import com.br.infra.repository.user.UserReadOnlyRepository
-import com.br.infra.repository.user.UserRepository
-import com.br.infra.repository.user.UserWriteOnlyRepository
+import com.br.infra.repository.users.UserReadOnlyRepository
+import com.br.infra.repository.users.UserRepository
+import com.br.infra.repository.users.UserWriteOnlyRepository
 import com.br.infra.repository.usersconnections.UsersConnectionReadOnlyRepository
 import com.br.infra.repository.usersconnections.UsersConnectionWriteOnlyRepository
 import com.br.infra.repository.usersconnections.UsersConnectionRepository

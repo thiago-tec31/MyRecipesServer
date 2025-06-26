@@ -2,7 +2,7 @@ package domain.services.qrcode
 
 import com.br.domain.services.qrcode.QrCodeReaderService
 import com.br.infra.repository.qrcode.QrCodeReadOnlyRepository
-import com.br.infra.repository.user.UserReadOnlyRepository
+import com.br.infra.repository.users.UserReadOnlyRepository
 import com.br.infra.repository.usersconnections.UsersConnectionReadOnlyRepository
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
