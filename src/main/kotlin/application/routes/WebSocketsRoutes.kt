@@ -52,7 +52,7 @@ fun Route.createQrCodeSession(
 ) {
     webSocket(Constants.CREATE_QR_CODE_ROUTE) {
         val userId = call.getUserAuthentication()
-        val generateQrCode = try {
+        val generateQrCode: GenerateQrCodeResponse? = try {
             qrCodeGeneratorService.generateQrCode(userId)
         } catch (ex: Exception) {
             println("Erro ao gerar o QR Code: ${ex.message}")

@@ -2,7 +2,7 @@ package com.br.domain.services.users
 
 import com.br.application.mappers.toUserResponse
 import com.br.application.payloads.responses.UserResponse
-import com.br.infra.repository.user.UserReadOnlyRepository
+import com.br.infra.repository.users.UserReadOnlyRepository
 
 class GetProfileUserService(
     private val userReadOnlyRepository: UserReadOnlyRepository

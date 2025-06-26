@@ -3,7 +3,7 @@ package domain.services.users
 import com.br.application.mappers.toUserResponse
 import domain.model.UserFactory
 import com.br.domain.services.users.GetProfileUserService
-import com.br.infra.repository.user.UserReadOnlyRepository
+import com.br.infra.repository.users.UserReadOnlyRepository
 import com.google.common.truth.Truth.assertThat
 import io.mockk.clearAllMocks
 import io.mockk.coEvery

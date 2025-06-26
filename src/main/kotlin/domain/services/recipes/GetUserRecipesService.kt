@@ -4,7 +4,7 @@ import com.br.application.mappers.toRecipesResponse
 import com.br.application.payloads.responses.RecipesResponse
 import com.br.domain.entity.CategoryEnum
 import com.br.infra.repository.recipes.RecipesReadOnlyRepository
-import com.br.infra.repository.user.UserReadOnlyRepository
+import com.br.infra.repository.users.UserReadOnlyRepository
 import com.br.infra.repository.usersconnections.UsersConnectionReadOnlyRepository
 
 class GetUserRecipesService(

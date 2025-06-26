@@ -1,7 +1,7 @@
 package com.br.domain.services.users
 
 import com.br.domain.entity.Users
-import com.br.infra.repository.user.UserReadOnlyRepository
+import com.br.infra.repository.users.UserReadOnlyRepository
 
 class GetUserByIdService(
     private val userReadOnlyRepository: UserReadOnlyRepository

@@ -1,4 +1,4 @@
-package com.br.infra.repository.user
+package com.br.infra.repository.users
 
 import com.br.domain.entity.Users
 

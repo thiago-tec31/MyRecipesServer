@@ -1,10 +1,9 @@
-package com.br.infra.repository.user
+package com.br.infra.repository.users
 
 import com.br.domain.services.database.DatabaseService
 import com.br.domain.entity.Users
 import com.br.util.Constants
 import com.br.util.ErrorCodes
-import com.mongodb.MongoException
 import com.mongodb.client.model.Filters
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
@@ -19,65 +18,50 @@ class UserRepository(
     private val usersCollection = databaseService.database.getCollection<Users>(Constants.COLLECTION_NAME_USERS)
 
     override suspend fun insertUser(users: Users): Boolean {
-        try {
-            return usersCollection.insertOne(users).wasAcknowledged()
-        } catch (e: Exception) {
-            when(e) {
-                is MongoException -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)
-                else -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)
-            }
+        return try {
+            usersCollection.insertOne(users).wasAcknowledged()
+        } catch (ex: Exception) {
+            logger.error("${ErrorCodes.DATABASE_ERROR.message}: ${ex.message}", ex)
+            false
         }
-        return false
     }
 
     override suspend fun findUserById(userId: String): Users? {
-        try {
-            val filter = Filters.eq("_id", ObjectId(userId))
-            return usersCollection.find(filter).firstOrNull()
-        } catch (e: Exception) {
-            when(e) {
-                is MongoException -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)
-                else -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)
-            }
+        return try {
+            val filter = Filters.eq(Constants.MONGODB_ID, ObjectId(userId))
+            usersCollection.find(filter).firstOrNull()
+        } catch (ex: Exception) {
+            logger.error("${ErrorCodes.DATABASE_ERROR.message}: ${ex.message}", ex)
+            null
         }
-        return null
     }
 
     override suspend fun findUsersByIds(usersIds: List<String>): List<Users> {
-        try {
+        return try {
             val objectIds = usersIds.map { ObjectId(it) }
-            return usersCollection.find(Filters.`in`("_id", objectIds)).toList()
-        } catch (e: Exception) {
-            when(e) {
-                is MongoException -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)
-                else -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)
-            }
+            usersCollection.find(Filters.`in`(Constants.MONGODB_ID, objectIds)).toList()
+        } catch (ex: Exception) {
+            logger.error("${ErrorCodes.DATABASE_ERROR.message}: ${ex.message}", ex)
+            emptyList()
         }
-        return emptyList()
     }
 
     override suspend fun checkIfUserExists(email: String): Boolean {
-        try {
-            val count = usersCollection.countDocuments(Filters.eq(Users::email.name, email))
-            return count > 0
-        } catch (e: Exception) {
-            when(e) {
-                is MongoException -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)
-                else -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)
-            }
+        return try {
+            val filters = Filters.eq(Users::email.name, email)
+            usersCollection.find(filters).firstOrNull() != null
+        } catch (ex: Exception) {
+            logger.error("${ErrorCodes.DATABASE_ERROR.message}: ${ex.message}", ex)
+            false
         }
-        return false
     }
 
     override suspend fun checkIfUserExistsReturn(email: String): Users? {
-        try {
-            return usersCollection.find(Filters.eq(Users::email.name, email)).firstOrNull()
-        } catch (e: Exception) {
-            when(e) {
-                is MongoException -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)
-                else -> logger.error("${ErrorCodes.DATABASE_ERROR}: ${e.message}", e)
-            }
+        return try {
+            usersCollection.find(Filters.eq(Users::email.name, email)).firstOrNull()
+        } catch (ex: Exception) {
+            logger.error("${ErrorCodes.DATABASE_ERROR.message}: ${ex.message}", ex)
+            null
         }
-        return null
     }
 }

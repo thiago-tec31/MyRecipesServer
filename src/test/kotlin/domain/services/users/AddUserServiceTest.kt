@@ -6,8 +6,8 @@ import com.br.domain.services.password.BCryptPasswordService
 import com.br.domain.services.users.RegisterUserService
 import com.br.domain.validations.AddValidationUserRequest
 import fake_util.Constants
-import com.br.infra.repository.user.UserReadOnlyRepository
-import com.br.infra.repository.user.UserWriteOnlyRepository
+import com.br.infra.repository.users.UserReadOnlyRepository
+import com.br.infra.repository.users.UserWriteOnlyRepository
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
 import com.google.common.truth.Truth.assertThat

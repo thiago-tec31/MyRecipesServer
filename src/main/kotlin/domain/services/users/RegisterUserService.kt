@@ -5,8 +5,8 @@ import com.br.application.payloads.responses.SimpleResponse
 import com.br.domain.entity.Users
 import com.br.domain.services.password.BCryptPasswordService
 import com.br.domain.validations.AddValidationUserRequest
-import com.br.infra.repository.user.UserReadOnlyRepository
-import com.br.infra.repository.user.UserWriteOnlyRepository
+import com.br.infra.repository.users.UserReadOnlyRepository
+import com.br.infra.repository.users.UserWriteOnlyRepository
 import com.br.util.Constants
 import com.br.util.ErrorCodes
 import com.br.util.SuccessCodes
