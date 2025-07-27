@@ -103,7 +103,7 @@ class RecipesRepository(
 
             recipesUser.filter { recipes ->
                 nameOrIngredient.isBlank() || recipes.name.contains(nameOrIngredient, true) ||
-                        recipes.ingredients.all { it.name.contains(nameOrIngredient, true) }
+                        recipes.ingredients.any { it.name.contains(nameOrIngredient, true) }
             }.sortedBy { recipes ->
                 recipes.name
             }
