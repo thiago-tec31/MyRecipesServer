@@ -8,7 +8,7 @@ object Constants {
     const val SECRET = "SECRET"
 
     const val COST_FACTOR = 16
-    const val DURATION_IN_SECONDS_QRCODE = 40
+    const val DURATION_IN_SECONDS_QRCODE = 60
 
     const val PATH_ID = "/{id}"
     const val PATH_SEARCH = "/search"
