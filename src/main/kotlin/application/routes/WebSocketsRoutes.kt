@@ -78,8 +78,7 @@ fun Route.createQrCodeSession(
                 if (frame is Frame.Text) {
                     val receivedText = frame.readText()
                     try {
-                        val userActionRequest = GsonUtil
-                            .deserialize(UserActionRequest::class.java, receivedText)
+                        val userActionRequest = GsonUtil.deserialize(UserActionRequest::class.java, receivedText)
 
                         if (userActionRequest.cancelOperation) {
                             connectionSessionService.sendCancelConnectionMessage(
@@ -129,7 +128,7 @@ fun Route.createQrCodeSession(
                                     userToConnectId = userActionRequest.userToConnectionId.orEmpty(),
                                     session = this
                                 )
-                                connectionSessionService.onTimeExpired(userId = generateQrCode.userId)
+                                connectionSessionService.onTimeExpired(userId = generateQrCode.userId, session = this)
                             }
                         }
                     } catch (ex: Exception) {

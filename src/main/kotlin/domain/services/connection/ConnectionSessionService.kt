@@ -32,7 +32,7 @@ class ConnectionSessionService(
 
     fun startConnectionSessionAndTimer(userId: String, session: WebSocketSession) {
         connectionManager.addConnection(userId, session)
-        timerService.startTimer(userId, Constants.DURATION_IN_SECONDS_QRCODE, this)
+        timerService.startTimer(userId, Constants.DURATION_IN_SECONDS_QRCODE, this, session)
     }
 
     fun startConnectionSession(userId: String, session: WebSocketSession) {
@@ -50,8 +50,8 @@ class ConnectionSessionService(
         sendMessageToUser(userId, timeRemainingResponse)
     }
 
-    override suspend fun onTimeExpired(userId: String) {
-        sendQrCodeExpiredToUser(userId)
+    override suspend fun onTimeExpired(userId: String, session: WebSocketSession) {
+        sendQrCodeExpiredToUser(userId, session)
         timerService.resetTimer(userId)
     }
 
@@ -152,12 +152,12 @@ class ConnectionSessionService(
     }
 
 
-    private suspend fun sendQrCodeExpiredToUser(userId: String) {
+    private suspend fun sendQrCodeExpiredToUser(userId: String, session: WebSocketSession) {
         val qrCodeExpiredResponse = QrCodeExpiredResponse(
             message = SuccessCodes.EXPIRED_QR_CODE.message
         )
         sendMessageToUser(userId, qrCodeExpiredResponse)
-        removeAndCloseSessionByQrCodeExpired(userId, null)
+        removeAndCloseSessionByQrCodeExpired(userId, session)
     }
 
     private suspend fun removeAndCloseSessionByQrCodeExpired(userId: String, session: WebSocketSession?) {
