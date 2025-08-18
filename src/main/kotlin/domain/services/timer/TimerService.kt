@@ -1,5 +1,6 @@
 package com.br.domain.services.timer
 
+import io.ktor.websocket.WebSocketSession
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -13,7 +14,7 @@ class TimerService(
 ) {
     private val timers = ConcurrentHashMap<String, Job>()
 
-    fun startTimer(userId: String, durationInSeconds: Int, listener: TimerListener) {
+    fun startTimer(userId: String, durationInSeconds: Int, listener: TimerListener, session: WebSocketSession) {
         timers[userId]?.cancel()
 
         timers[userId] = scope.launch {
@@ -22,7 +23,7 @@ class TimerService(
                     delay(1.seconds)
                     listener.onTimeUpdate(userId, remainingTime)
                 }
-                listener.onTimeExpired(userId)
+                listener.onTimeExpired(userId, session)
             } catch (e: Exception) {
                 println("Erro ao criar o timer para o usuario: ${e.message}")
             }
